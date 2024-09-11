@@ -2,10 +2,10 @@ import java.util.Stack;
 
 public class Fixers {
     Stack<String> operations = new Stack<String>();
+    String postfix = "";
     
     public Fixers(String infix) {
-        String postfix = postConvert(infix);
-        System.out.println(postfix);
+        postfix = postConvert(infix);
     }
 
     public String postConvert(String infix) {
@@ -28,7 +28,7 @@ public class Fixers {
                     temp.pop(); 
                 }
             }
-            else if (c == '+' || c == '-' || c == '*' || c == '/') {
+            else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
                 while (!temp.isEmpty() && opOrder(temp.peek()) >= opOrder(c)) {
                     output += temp.pop();
                 }
@@ -41,6 +41,24 @@ public class Fixers {
         return output;
     }
 
+    public String preConvert(String postfix) {
+        String output = "";
+        String operands = "1234567890";
+        Stack<Character> temp = new Stack<>();
+        
+        for (char c : postfix.toCharArray()) {
+            if (operands.indexOf(c) != -1) {
+                temp.push(c);
+            }
+            else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
+                int right = temp.pop() - '0';
+                int left = temp.pop() - '0';
+            }
+        }
+
+        return output;
+    }
+
     private int opOrder(char c) {
         switch (c) {
             case '+':
@@ -49,8 +67,14 @@ public class Fixers {
             case '*':
             case '/':
                 return 2;
+            case '^':
+                return 3; 
             default:
                 return -1;
         }
+    }
+
+    public String toString(){
+        return postfix;
     }
 }

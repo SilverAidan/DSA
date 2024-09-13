@@ -45,21 +45,28 @@ public class Fixers {
     }
 
     public String preConvert(String postfix) {
-        String output = "";
         String operands = "1234567890";
-        Stack<Character> temp = new Stack<>();
+        Stack<String> temp = new Stack<>();
         
         for (char c : postfix.toCharArray()) {
             if (operands.indexOf(c) != -1) {
-                temp.push(c);
+                temp.push(""+c);
             }
             else if (c == '+' || c == '-' || c == '*' || c == '/' || c == '^') {
-                int right = temp.pop() - '0';
-                int left = temp.pop() - '0';
+                String right = temp.pop();
+                String left = temp.pop();
+                temp.push(c + left + right);
             }
         }
+        return temp.pop();
+    }
 
-        return output;
+    public String evalPost(){
+        return null;
+    }
+
+    public String evalPre(){
+        return null;
     }
 
     private int opOrder(char c) {
@@ -78,7 +85,6 @@ public class Fixers {
     }
 
     public String toString(){
-        return postfix;
-        return prefix;
+        return "Postfix: " +  postfix + "\n" + "Prefix: " + prefix;
     }
 }

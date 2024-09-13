@@ -2,10 +2,10 @@ import java.util.Stack;
 
 public class Fixers {
     Stack<String> operations = new Stack<String>();
-    String postfix = "";
     
     public Fixers(String infix) {
-        postfix = postConvert(infix);
+        String postfix = postConvert(infix);
+        String prefix = postConvert(postfix);
     }
 
     public String postConvert(String infix) {

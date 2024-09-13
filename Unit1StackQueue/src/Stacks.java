@@ -41,8 +41,6 @@ public class Stacks {
 		webs.push("somewebsite.com");
 		System.out.println(webs.sites.length);
 		String exp1 = "({3+4[2x+3]-2})/2";
-		String exp2 = "({3+4[2x+3]-2})/2";
-		String exp3 = "({3+4[2x+3]-2})/2";
 		//exp1 = stripExp(exp1);
 		System.out.println(exp1);
 		for(String w: webs) {

@@ -2,10 +2,13 @@ import java.util.Stack;
 
 public class Fixers {
     Stack<String> operations = new Stack<String>();
-    
+
+    String postfix = "";
+    String prefix = "";
+
     public Fixers(String infix) {
-        String postfix = postConvert(infix);
-        String prefix = postConvert(postfix);
+        postfix = postConvert(infix);
+        prefix = preConvert(postfix);
     }
 
     public String postConvert(String infix) {
@@ -76,5 +79,6 @@ public class Fixers {
 
     public String toString(){
         return postfix;
+        return prefix;
     }
 }

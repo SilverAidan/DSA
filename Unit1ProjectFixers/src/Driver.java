@@ -8,5 +8,6 @@ public class Driver {
 		infix = n.next();
 		Fixers fix = new Fixers(infix);
 		System.out.println(fix);
+		n.close();
 	}
 }

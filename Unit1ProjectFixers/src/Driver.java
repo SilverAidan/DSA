@@ -6,7 +6,7 @@ public class Driver {
 		System.out.print("Enter an infix expression: ");
 		String infix;
 		infix = n.next();
-		Fixers fix = new Fixers(infix);
+		Fixers fix = new Fixers(infix, n);
 		System.out.println(fix);
 		n.close();
 	}

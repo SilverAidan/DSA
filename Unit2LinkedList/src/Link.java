@@ -28,9 +28,34 @@ public class Link {
         Track t4 = new Track("Hey Bulldog", "Beatles", 160, null);
         Playlist Yellow = new Playlist(t1);
         Yellow.addTrack(t3);
-        System.out.println("blah");
+        System.out.println("blah\n");
         Yellow.addAfterTrack(t1, t2);
         Yellow.addAfterTrack(t3, t4);
+
+        System.out.println("Full Playlist");
         System.out.println(Yellow);
+
+        System.out.println("Playing on repeat");
+        for(int i = 0; i<10; i++){
+            System.out.println(Yellow.playSong());
+        }
+
+        System.out.println("REMOVING TESTING");
+        Yellow.remove(t3);
+        System.out.println(Yellow);
+        Yellow.remove(t4);
+        System.out.println(Yellow.playSong());//SHOULD BE THE INTRO
+        Yellow.remove(t1);//Remove the first song
+        System.out.println();
+        System.out.println(Yellow);
+        Yellow.remove(t2);
+        System.out.println(Yellow.playSong() + "\n");
+
+        Yellow.addTrack(new Track("Yellow Submarine", "Beatles", 160, null));
+        Yellow.addTrack(new Track("Northern Song", "Beatles", 208, null));
+        Yellow.addTrack(new Track("All Together Now", "Beatles", 134, null));
+        Yellow.addTrack(new Track("Hey Bulldog", "Beatles", 160, null));
+        System.out.println(Yellow);
+        //back to OG
     }
 }

@@ -7,7 +7,10 @@ public class Playlist {
     }
 
     public Playlist(Track i){
-        intro = i; current = i;
+        this();
+        if(i!=null){
+            intro = i; current = i;
+        }
     }
 
     public void addTrack(Track t){
@@ -38,6 +41,45 @@ public class Playlist {
         newTrack.next = runner.next;
         runner.next = newTrack;
         return true;
+    }
+
+    public Track remove(){
+        return remove(current); //HOLD ON
+    }
+
+    public Track remove(Track t){
+        if(t==null || intro == null)
+            return null;      
+        Track runner = intro;
+        if(t.equals(runner)){
+            intro = intro.next;
+            if(current.equals(runner))
+                current = current.next==null?intro:current.next;
+            return t;
+        }
+        while(runner.next != null){
+            if(runner.next.equals(t))
+                break;
+            runner = runner.next;
+        }
+        if(runner.next == null)
+            return null;  
+        runner.next = runner.next.next;
+        if(current.equals(t))
+            current = current.next==null?intro:current.next; 
+        return t;
+    }
+
+    public String playSong(){
+        if(current ==  null){
+            return "BUY SOME SONGS YOU CHEAP SON OF A...";
+        }
+        String output = current.title + ", " + current.Artist + ": " + current.duration;
+        current = current.next;
+        if(current == null){
+            current = intro;
+        }
+        return output;
     }
 
     public String toString(){

@@ -39,7 +39,6 @@ public class Link {
         for(int i = 0; i<10; i++){
             System.out.println(Yellow.playSong());
         }
-
         System.out.println("REMOVING TESTING");
         Yellow.remove(t3);
         System.out.println(Yellow);
@@ -57,5 +56,7 @@ public class Link {
         Yellow.addTrack(new Track("Hey Bulldog", "Beatles", 160, null));
         System.out.println(Yellow);
         //back to OG
+        Yellow.shuffle();
+        System.out.println(Yellow);
     }
 }

@@ -55,6 +55,7 @@ public class Playlist {
             intro = intro.next;
             if(current.equals(runner))
                 current = current.next==null?intro:current.next;
+            t.next = null;
             return t;
         }
         while(runner.next != null){
@@ -67,6 +68,7 @@ public class Playlist {
         runner.next = runner.next.next;
         if(current.equals(t))
             current = current.next==null?intro:current.next; 
+        t.next = null;
         return t;
     }
 
@@ -80,6 +82,26 @@ public class Playlist {
             current = intro;
         }
         return output;
+    }
+
+    public void shuffle(){
+        if(intro == null){
+            return;
+        }
+        Track runner = intro; 
+        int size = 0;
+        while(runner != null){
+            runner = runner.next;
+            size++;
+        }
+        for(int i = 0; i < size; i++){
+            int rando = (int)(Math.random()*size);
+            runner = intro;
+            for(int j = 0; j < rando; j++){
+                runner = runner.next;
+            }
+            addTrack(remove(runner));
+        }
     }
 
     public String toString(){

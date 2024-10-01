@@ -1,8 +1,8 @@
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class LinkExcersizes {
-    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static void main(String[] args){
         
-        Node one = new Node(1, null);
+        Node<Integer> one = new Node(1, null);
         one.next = new Node(3, null);
         one.next.next = new Node(5, null);
 
@@ -20,9 +20,31 @@ public class LinkExcersizes {
         for(Node<Integer> n : zipped){
             System.out.print(n.data+", ");
         }
+        
+        one.next.next.next = one;
+        //for(Node<Integer> n:one){
+        //    System.out.print(n.data + ", ");
+        //}
+        System.out.println(hasCycle(one));
+        System.out.println(hasCycle(two));
+    }
+    public static boolean hasCycle(Node head){
+        if(head==null||head.next==null){
+            return false;
+        }
+        Node slow = head;
+        Node fast = head.next;
+        while(fast!=null&&fast.next!=null){
+            if(slow == fast || slow == fast.next){
+                return true;
+            }
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+        return false;
     }
 
-    @SuppressWarnings({ "rawtypes", "unchecked" })
+
     public static Node zipperNodes(Node n1, Node n2){
         //PRECONDITION BOTH NODES ARE NOT NULL
         boolean which = false;
@@ -44,7 +66,7 @@ public class LinkExcersizes {
         return output;
     }
 
-    public static String printChain(@SuppressWarnings("rawtypes") Node n){
+    public static String printChain(Node n){
         String output = "";
         while(n!=null){
             output += n.data+", ";

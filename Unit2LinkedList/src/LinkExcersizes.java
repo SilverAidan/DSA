@@ -14,6 +14,10 @@ public class LinkExcersizes {
         System.out.println(printChain(zipped));
         System.out.println(printChain(one));
         System.out.println(printChain(two));
+
+        for(Object n: zipped){
+            System.out.print(((Node)n).data+", ");
+        }
     }
 
     public static Node zipperNodes(Node n1, Node n2){

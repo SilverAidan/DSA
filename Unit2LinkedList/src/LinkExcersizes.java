@@ -1,5 +1,7 @@
 public class LinkExcersizes {
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static void main(String[] args){
+        
         Node one = new Node(1, null);
         one.next = new Node(3, null);
         one.next.next = new Node(5, null);
@@ -10,19 +12,18 @@ public class LinkExcersizes {
             runner.next = new Node(i, null);
             runner = runner.next;
         }
-        Node zipped = zipperNodes(one, two);
+        Node<Integer> zipped = zipperNodes(one, two);
         System.out.println(printChain(zipped));
         System.out.println(printChain(one));
         System.out.println(printChain(two));
 
-        for(Object n: zipped){
-            System.out.print(((Node)n).data+", ");
+        for(Node<Integer> n : zipped){
+            System.out.print(n.data+", ");
         }
     }
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     public static Node zipperNodes(Node n1, Node n2){
-        //TEDIUS NULL CHECKING
-
         //PRECONDITION BOTH NODES ARE NOT NULL
         boolean which = false;
         Node output = new Node(n1.data, null);
@@ -43,7 +44,7 @@ public class LinkExcersizes {
         return output;
     }
 
-    public static String printChain(Node n){
+    public static String printChain(@SuppressWarnings("rawtypes") Node n){
         String output = "";
         while(n!=null){
             output += n.data+", ";

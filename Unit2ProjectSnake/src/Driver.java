@@ -3,9 +3,10 @@ public class Driver {
        Snake slither = new Snake();
        System.out.println(slither);
        System.out.println(slither.getSize());
-       slither.reverse();
-       System.out.println(slither);
-       slither.update('M');
+       System.out.println("Dir" + slither.dir);
+       //slither.reverse();
+       //System.out.println(slither);
+       slither.update("MM");
        System.out.println(slither);
     }
 }

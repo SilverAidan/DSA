@@ -4,11 +4,11 @@ public class Body {
 
     // Constructor
     public Body(){
-        this.row = 3; 
-        this.col = 3; 
+        this.row = 4; 
+        this.col = 4; 
         Body runner = this;
-        for(int i = 0; i < 3; i++){
-            runner.next = new Body(3-i,3,null);
+        for(int i = 1; i < 3; i++){
+            runner.next = new Body(4,4-i,null);
             runner = runner.next;
         }
     }

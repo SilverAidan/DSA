@@ -1,8 +1,8 @@
-
+@SuppressWarnings({"rawtypes", "unchecked"})
 public class LinkExercises {
 
+
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
 		Node<Integer> one = new Node(1,null);
 		one.next = new Node(3,null);
 		one.next.next = new Node(5,null);

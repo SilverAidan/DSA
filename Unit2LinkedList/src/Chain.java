@@ -30,7 +30,7 @@ public class Chain {
         return output;
     }
 
-    public void addNode(int number, int i){
+	public void removeNode(int number, int i){
         if(head == null){
             head = new Node<Integer>(number,null);
             head.next = head;
@@ -49,5 +49,28 @@ public class Chain {
         if(addOn.next == tail){
             tail = addOn;
         }
+    }
+
+	public void cycle(){
+        //TODO
+    }
+
+    public void addNode(int number, int i){
+        if(head == null){
+            head = new Node<Integer>(number,null);
+            head.next = head;
+            tail = head;
+            return;
+        }
+        Node<Integer> runner = head;
+        if(i == 0){
+			tail.next = new Node<Integer>(number, null);
+			head = tail.next;
+		}
+        for(;i>1;i--){
+            runner = runner.next;
+        }
+        Node<Integer> addOn = new Node<Integer>(number, runner.next);
+        runner.next = addOn;
     }
 }

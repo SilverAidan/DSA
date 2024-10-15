@@ -30,29 +30,21 @@ public class Chain {
         return output;
     }
 
-	public void removeNode(int number, int i){
-        if(head == null){
-            head = new Node<Integer>(number,null);
-            head.next = head;
-            tail = head;
-            return;
-        }
-        Node<Integer> runner = head;
-        
-        for(;i>1;i--){
-            runner = runner.next;
-        }
-        Node<Integer> addOn = new Node<Integer>(number, runner.next);
-        runner.next = addOn;
-
-        //CHECK IF HEAD == TAIL LATER
-        if(addOn.next == tail){
-            tail = addOn;
-        }
-    }
-
+	public void removeNode(int i) {
+		Node<Integer> runner = head;
+		for(;i>0;i--){
+			runner = runner.next;
+		}
+	}
+	
 	public void cycle(){
-        //TODO
+
+        head = tail;
+		Node<Integer> runner = head;
+		while(runner.next != tail){
+			runner = runner.next;
+		}
+		tail = runner;
     }
 
     public void addNode(int number, int i){
@@ -64,13 +56,17 @@ public class Chain {
         }
         Node<Integer> runner = head;
         if(i == 0){
-			tail.next = new Node<Integer>(number, null);
+			tail.next = new Node<Integer>(number, head);
 			head = tail.next;
+			return;
 		}
         for(;i>1;i--){
             runner = runner.next;
         }
         Node<Integer> addOn = new Node<Integer>(number, runner.next);
         runner.next = addOn;
+		if(addOn.next == head){
+			tail = addOn;
+		}
     }
 }

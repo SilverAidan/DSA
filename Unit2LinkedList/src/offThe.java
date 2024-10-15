@@ -7,7 +7,11 @@ public class offThe {
     System.out.println(gold);
     gold.addNode(2, 1);
     System.out.println(gold);
-    gold.addNode(3, 4);
+    gold.addNode(3, 2);
     System.out.println(gold);
+    System.out.println("Cycle 3 times");
+    gold.cycle();System.out.println(gold);
+    gold.cycle();System.out.println(gold);
+    gold.cycle();System.out.println(gold);
    }
 }

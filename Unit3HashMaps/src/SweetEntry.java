@@ -1,5 +1,4 @@
-@SuppressWarnings("hiding")
-public class SweetEntry<Address, Candies> {
+public class SweetEntry{
     Address key;
     Candies value;
     public SweetEntry(Address key, Candies value) {

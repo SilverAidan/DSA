@@ -13,7 +13,7 @@ public class Address {
         result = prime * result + ((zip == null) ? 0 : zip.hashCode());
         result = prime * result + ((street == null) ? 0 : street.hashCode());
         result = prime * result + number;
-        return result;
+        return Math.abs(result);
     }
     @Override
     public boolean equals(Object obj) {
@@ -38,6 +38,8 @@ public class Address {
             return false;
         return true;
     }
-    
-
+    @Override
+    public String toString() {
+        return "Address [zip=" + zip + ", street=" + street + ", number=" + number + "]";
+    }
 }

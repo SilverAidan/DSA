@@ -1,5 +1,5 @@
-import java.util.Scanner;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 public class Driver {
     public static void main(String[] args) throws Exception {
@@ -28,6 +28,16 @@ public class Driver {
 
         SweetMap Glastonbury = new SweetMap();
         Address a1 = new Address("06033", "Hubbard", 330);
-
+        Candies c1 = new Candies(new ArrayList<String>(Arrays.asList("KitKat", "Snickers")));
+        SweetEntry e1 = new SweetEntry(a1, c1);
+        Glastonbury.put(e1);
+        Address a2 = new Address("06033", "Main", 100);
+        Candies c2 = new Candies(new ArrayList<String>(Arrays.asList("Twix", "M&M", "Twizzlers")));
+        SweetEntry e2 = new SweetEntry(a2, c2);
+        Glastonbury.put(e2);
+        Address a3 = new Address("06033", "Dummy", 100);
+        System.out.println(Glastonbury.get(a3));
+        System.out.println(Glastonbury);
+        System.out.println(Glastonbury.size());
     }
 }

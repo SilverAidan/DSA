@@ -6,6 +6,4 @@ public class  SweetEntry {
         this.key = key;
         this.value = value;
     }
-    
-
 }

@@ -3,7 +3,7 @@ import java.util.ArrayList;
 public class Candies {
     ArrayList<String> types;
 
-    public Candies(ArrayList<String> types){
+    public Candies(ArrayList<String> types) {
         this.types = types;
     }
 

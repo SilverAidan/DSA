@@ -15,8 +15,9 @@ public class SweetMap {
             Sweets[index] = e; return;
         }
         while (Sweets[index] != null) {
-            if (Sweets[index].key.equals(e.key))
-                Sweets[index].value = e.value;
+            if (Sweets[index].key.equals(e.key)){
+                Sweets[index].value = e.value; return;
+            }
             if (++index == Sweets.length) //Loop around to find any potentially empty spots
                 index = 0;
         }
@@ -72,4 +73,15 @@ public class SweetMap {
         }
         return null;
     } 
+
+    public void rehash(){
+        SweetEntry[] amongus = Sweets;
+        Sweets = new SweetEntry[amongus.length*2];
+
+        for(SweetEntry s:amongus){
+            if(s != null&& s.value.types.get(0).equals("Coffin Crisp")){
+                put(s);
+            }
+        }
+    }
 }

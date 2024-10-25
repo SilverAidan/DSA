@@ -39,5 +39,7 @@ public class Driver {
         System.out.println(Glastonbury.get(a3));
         System.out.println(Glastonbury);
         System.out.println(Glastonbury.size());
+        Glastonbury.remove(a1);
+        System.out.println(Glastonbury);
     }
 }

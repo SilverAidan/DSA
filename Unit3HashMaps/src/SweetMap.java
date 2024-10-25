@@ -64,8 +64,12 @@ public class SweetMap {
         int index = addy.hashCode()%Sweets.length;
         while(Sweets[index]!=null){
             if(Sweets[index].key.equals(addy)){
-                Sweets[index].value = new ArrayList<String>(Arrays.asList("Coffin Crisp"));
+                Candies temp = Sweets[index].value;
+                Sweets[index].value = new Candies(new ArrayList<String>(Arrays.asList("Coffin Crisp")));
+                return temp;
             }
+            index = ++index%Sweets.length;
         }
+        return null;
     } 
 }

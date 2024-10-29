@@ -1,4 +1,4 @@
-public class  SweetEntry {
+public class  SweetEntry{
     Address key;
     Candies value;
     //

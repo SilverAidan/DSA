@@ -44,5 +44,10 @@ public class Driver {
         SweetEntry e3 = new SweetEntry(a1, new Candies(new ArrayList<String>(Arrays.asList("Toblerone", "Nerd Gummi Clusters"))));
         Glastonbury.put(e3);
         System.out.println(Glastonbury);
+        for(SweetEntry e:Glastonbury){
+            System.out.println(e.key + "->"+e.value);
+        }
+
+        
     }
 }

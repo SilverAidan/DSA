@@ -33,12 +33,8 @@ public class ConcurrentError {
         fruitColors.put("Yellow", new HashSet<>(Arrays.asList("Apple", "Banana", "Lemon")));
         fruitColors.put("Red", new HashSet<>(Arrays.asList("Apple", "Pomegranate", "Cherry"))); 
         System.out.println(fruitColors);
-        
         for(String key : fruitColors.keySet()){
             fruitColors.get(key).remove("Apple");
-        }
-        for(HashSet<String> value : fruitColors.values()){
-            value.remove("Apple");
         }
         System.out.println(fruitColors);
     }

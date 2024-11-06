@@ -1,3 +1,6 @@
+import java.io.File;
+import java.util.Iterator;
+
 public class FlashMap implements Iterable<FlashEntry> {
      FlashEntry[] Sweets; 
  
@@ -37,7 +40,7 @@ public class FlashMap implements Iterable<FlashEntry> {
          throw new UnsupportedOperationException("TODO");
      }
  
-     public boolean equals(FlashEntry<Streamer, WatchTime> entry) {
+     public boolean equals(FlashEntry entry) {
          throw new UnsupportedOperationException("TODO");
      }
  

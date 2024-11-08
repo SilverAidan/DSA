@@ -1,5 +1,9 @@
 public class Streamer {
     private String name;
+    
+    public Streamer(String name) {
+        this.name = name;
+    }
 
     @Override
     public int hashCode() {
@@ -24,6 +28,11 @@ public class Streamer {
         } else if (!name.equals(other.name))
             return false;
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + name;
     }
     
 }

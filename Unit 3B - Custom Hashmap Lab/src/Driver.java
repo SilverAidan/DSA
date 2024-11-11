@@ -6,20 +6,26 @@ public class Driver {
         FlashMap stream = new FlashMap();
         Scanner inputFile = new Scanner(new File("stats.csv"));
         inputFile.nextLine();
-
-        Scanner singleLine = new Scanner(inputFile.nextLine());
-        singleLine.useDelimiter(",");
-        Streamer s;
-        WatchTime w;
-        FlashEntry f;
-        while(singleLine.next() != null){
-            s = new Streamer(singleLine.next());
-            w = new WatchTime(Integer.valueOf(singleLine.next()).intValue());
-            f = new FlashEntry(s, w, null);
-            stream.put(f);
+        while (inputFile.hasNextLine()) {
+            String line = inputFile.nextLine();
+            Scanner singleLine = new Scanner(line);
+            singleLine.useDelimiter(",");
+            Streamer s;
+            WatchTime w;
+            FlashEntry f;
+            if (singleLine.hasNext()) {
+                s = new Streamer(singleLine.next());
+                if (singleLine.hasNextLong()) {
+                    w = new WatchTime(singleLine.nextLong());
+                    f = new FlashEntry(s, w, null);
+                    stream.put(f);
+                }
+            }
+            singleLine.close();
         }
         System.out.println(stream);
-        singleLine.close();
+        Streamer xqc = new Streamer("xQcOW");
+        System.out.println(stream.get(xqc));
         inputFile.close();
     }
 }

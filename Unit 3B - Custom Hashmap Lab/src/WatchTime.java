@@ -1,13 +1,16 @@
 public class WatchTime {
-    private int time;
+    private long time;
 
-    public WatchTime(int time) {
+    public WatchTime(long time) {
         this.time = time;
+    }
+
+    public long getTime() {
+        return time;
     }
 
     @Override
     public String toString() {
-        return "Watch time = " + time;
+        return "" + time;
     }
-    
 }

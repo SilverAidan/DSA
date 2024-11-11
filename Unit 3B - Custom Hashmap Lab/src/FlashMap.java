@@ -1,8 +1,6 @@
-import java.util.Iterator;
-
-public class FlashMap implements Iterable<FlashEntry> {
+public class FlashMap {
    FlashEntry[] Views;
-   int defaultCapacity = 500;
+   int defaultCapacity = 50;
    int collisionCount = 0;
 
    public FlashMap() {
@@ -19,14 +17,13 @@ public class FlashMap implements Iterable<FlashEntry> {
          return;
       }
       FlashEntry runner = Views[index];
-      while (runner != null) {
+      while (runner.next != null) {
          if (runner.key.equals(e.key)) {
             runner.value = e.value;
             return;
          }
          runner = runner.next;
       }
-      runner = Views[index];
       runner.next = e;
       collisionCount++;
    }
@@ -48,7 +45,7 @@ public class FlashMap implements Iterable<FlashEntry> {
 
    public String toString() {
       String output = "";
-      for (int i = 0; i < Views.length; i++) {
+      for (int i = 0; i < 10; i++) {
          if (Views[i] != null) {
             FlashEntry current = Views[i];
             output += (i + 1) + ": " + current.key + " -> " + current.value;
@@ -79,7 +76,25 @@ public class FlashMap implements Iterable<FlashEntry> {
    }
 
    public WatchTime remove(Streamer addy) {
-      throw new UnsupportedOperationException("TODO");
+      int index = Math.abs(addy.hashCode() % Views.length);
+      FlashEntry current = Views[index];
+      FlashEntry previous = null;
+      if (current == null)
+         return null;
+      while (current != null) {
+         if (current.key.equals(addy)) {
+            if (previous == null) {
+               Views[index] = current.next;
+            } else {
+               previous.next = current.next;
+            }
+            collisionCount--;
+            return current.value;
+         }
+         previous = current;
+         current = current.next;
+      }
+      return null;
    }
 
    public double loadFactor() {

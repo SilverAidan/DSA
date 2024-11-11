@@ -26,6 +26,8 @@ public class Driver {
         System.out.println(stream);
         Streamer xqc = new Streamer("xQcOW");
         System.out.println(stream.get(xqc));
+        stream.remove(xqc);
+        System.out.println(stream.get(xqc));
         inputFile.close();
     }
 }

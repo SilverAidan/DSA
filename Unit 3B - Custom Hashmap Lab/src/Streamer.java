@@ -1,6 +1,6 @@
 public class Streamer {
     private String name;
-    
+
     public Streamer(String name) {
         this.name = name;
     }
@@ -14,15 +14,14 @@ public class Streamer {
     }
 
     @Override
-    public boolean equals(Object obj) { 
+    public boolean equals(Object obj) {
         Streamer other = (Streamer) obj;
-        return name.equals(other.name); 
-}
-
+        return name.equals(other.name);
+    }
 
     @Override
     public String toString() {
         return "" + name;
     }
-    
+
 }

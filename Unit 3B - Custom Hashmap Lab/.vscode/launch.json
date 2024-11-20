@@ -9,6 +9,13 @@
             "name": "Driver",
             "request": "launch",
             "mainClass": "Driver",
+            "projectName": "Unit 3B - Custom Hashmap Lab_f18ba585"
+        },
+        {
+            "type": "java",
+            "name": "Driver",
+            "request": "launch",
+            "mainClass": "Driver",
             "projectName": "Unit 3B - Custom Hashmap Lab_33164e4b"
         },
         {

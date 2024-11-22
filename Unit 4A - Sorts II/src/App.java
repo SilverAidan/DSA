@@ -7,6 +7,10 @@ public class App {
         System.out.println(head);
         mergeLinkSort(head);
         System.out.println(head);
+        Quicky nemo = new Quicky(10);
+        System.out.println(nemo);
+        nemo.quickSort();
+        System.out.println(nemo);
     }
     public static Node mergeLinkSort(Node head){
         if(head == null || head.next == null){
@@ -16,9 +20,9 @@ public class App {
         System.out.println(middle);
         Node secondHalf = middle.next;
         middle.next = null;
-        Node left = mergeLinkSort(head); //first half
+        head = mergeLinkSort(head); //first half
         Node right = mergeLinkSort(secondHalf); //second half
-        return merge(left, right);
+        return merge(head, right);
     }
 
     public static Node merge(Node left, Node right) {

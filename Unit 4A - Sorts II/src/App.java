@@ -11,6 +11,9 @@ public class App {
         System.out.println(nemo);
         nemo.quickSort();
         System.out.println(nemo);
+        Quicky Bruce = new Quicky(10);
+        Bruce.Hoare();
+        System.out.println(Bruce);
     }
     public static Node mergeLinkSort(Node head){
         if(head == null || head.next == null){

@@ -37,26 +37,36 @@ public class Quicky {
         quickSortR(marlin+1, end);
     }
 
-    public void Hoare(){
-        HoareR(0, numbers.length-1);
+    public void Hoare() {
+        HoareR(0, numbers.length - 1);
     }
-
-    public void HoareR(int start, int end){
-        if(start>=end){
+    
+    public void HoareR(int start, int end) {
+        if (start >= end) {
             return;
         }
-        int pivot = numbers[(int)(Math.random()*(end=start+1))+start];
-        int crush = start; int squirt = end;
-        while(crush<squirt){
-            while(numbers[crush]<=pivot)crush++;
-            while(numbers[squirt] >= pivot)squirt--;
-            if(crush<squirt){
+        int pivotIndex = (int) (Math.random() * (end - start + 1)) + start;
+        int pivot = numbers[pivotIndex];
+        int crush = start;
+        int squirt = end;
+        while (crush <= squirt) {
+            while (numbers[crush] < pivot) {
+                crush++;
+            }
+            while (numbers[squirt] > pivot) {
+                squirt--;
+            }
+            if (crush <= squirt) {
                 int temp = numbers[crush];
                 numbers[crush] = numbers[squirt];
                 numbers[squirt] = temp;
+                crush++;
+                squirt--;
             }
         }
-        HoareR(start, squirt); HoareR(crush, end);
+        HoareR(start, squirt);
+        HoareR(crush, end);
     }
+    
 }
 

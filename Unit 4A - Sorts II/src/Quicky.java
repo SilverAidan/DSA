@@ -1,7 +1,10 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Quicky {
     int[] numbers;
+    
+    Scanner s = new Scanner(System.in);
 
     public Quicky(int count) {
         numbers = new int[count];
@@ -15,58 +18,98 @@ public class Quicky {
     }
 
     public void quickSort() {
-        quickSortR(0, numbers.length - 1);
+        partition(0, numbers.length - 1);
     }
 
-    private void quickSortR(int start, int end) {
-        if (start >= end){
-            return;
-        } 
-        int pivot = numbers[end];
-        int marlin = start;
-        for (int dory = start; dory < end; dory++) {
-            if (numbers[dory] < pivot) {
-                int temp = numbers[dory];
-                numbers[dory] = numbers[marlin];
-                numbers[marlin++] = temp;
+    private void partition(int i, int j) {
+        if (i >= j) return;
+        int randSpot = (int)(Math.random() * (j-i));
+        
+        //For now, we'll do it with the pivot as the last in the range
+        int pivot = numbers[j];
+        int p2 = i; //Slower pointer
+        for (int p1 = i; p1 < j; p1++) { //Normal pointer
+            if (numbers[p1] < pivot) {
+                int temp = numbers[p1];
+                numbers[p1] = numbers[p2];
+                numbers[p2++] = temp;
             }
         }
-        numbers[end] = numbers[marlin];
-        numbers[marlin] = pivot;
-        quickSortR(start, marlin-1);
-        quickSortR(marlin+1, end);
+
+        //Swap the pivot in
+        numbers[j] = numbers[p2];
+        numbers[p2] = pivot;
+        partition(i, p2-1);
+        partition(p2+1, j);
     }
 
-    public void Hoare() {
-        HoareR(0, numbers.length - 1);
+
+    //k representing the kth smallest number
+    public int quickSelect(int k) {
+        return selectPartition(0, numbers.length - 1, k-1);
     }
-    
-    public void HoareR(int start, int end) {
-        if (start >= end) {
+
+    private int selectPartition(int i, int j, int k) {
+        if (i > j) return -1;
+        
+        //For now, we'll do it with the pivot as the last in the range
+        int pivot = numbers[j];
+        int p2 = i; //Slower pointer
+        int p1;
+        for (p1 = i; p1 < j; p1++) { //Normal pointer
+            if (numbers[p1] < pivot) {
+                int temp = numbers[p1];
+                numbers[p1] = numbers[p2];
+                numbers[p2++] = temp;
+            }
+        }
+
+        //Swap the pivot in
+        numbers[j] = numbers[p2];
+        numbers[p2] = pivot;
+
+        if (p1 == k) { //
+            return numbers[p1];
+        }
+        else if (p1 > k) { //If our value is to the right of k
+            return selectPartition(i, p1-1, k); //Partition to left
+        } else { //Otherwise, do the opposite
+            return selectPartition(p1+1, j, k); //Partition to left
+        } //We skip over p1 in order to avoid checking it twice
+
+    }
+
+
+    public void hoareSort() {
+        hoarePartition(0,numbers.length - 1);
+    }
+
+    private void hoarePartition(int i, int j) {
+        if (i >= j) {
             return;
         }
-        int pivotIndex = (int) (Math.random() * (end - start + 1)) + start;
-        int pivot = numbers[pivotIndex];
-        int crush = start;
-        int squirt = end;
-        while (crush <= squirt) {
-            while (numbers[crush] < pivot) {
-                crush++;
-            }
-            while (numbers[squirt] > pivot) {
-                squirt--;
-            }
-            if (crush <= squirt) {
-                int temp = numbers[crush];
-                numbers[crush] = numbers[squirt];
-                numbers[squirt] = temp;
-                crush++;
-                squirt--;
+        //Pivot is random spot in range [i, j].
+        int pivot = numbers[(int)(Math.random() * (j - i + 1))+ i];
+        
+        System.out.println(i + " - " + j + "; " + pivot + ": " + Arrays.toString(numbers));
+        int p1 = i; int p2 = j;
+        while (p1 < p2) {
+            while (numbers[p1] < pivot) p1++;
+            while(numbers[p2] > pivot) p2--;
+            //p1--; p2++; //We go one past, so now we stop.
+            if (p1 <= p2) {
+                int temp = numbers[p1];
+                numbers[p1] = numbers[p2];
+                numbers[p2] = temp;
+                p1++; p2--;
             }
         }
-        HoareR(start, squirt);
-        HoareR(crush, end);
+        String dunky = s.nextLine();
+        System.out.println("YO");
+        hoarePartition(i, p1);
+        System.out.println("SUP");
+        hoarePartition(p1, j);
+        System.out.println("DONE :(");
+        return;
     }
-    
 }
-

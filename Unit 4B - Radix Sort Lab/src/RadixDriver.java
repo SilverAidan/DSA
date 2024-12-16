@@ -2,7 +2,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -14,11 +13,9 @@ public class RadixDriver {
         JFileChooser j = new JFileChooser();
         frame.setSize(1500, 800);
         frame.setTitle("Kirby Sorter 2.0");
-        frame.setLocation(225, 100);
+        frame.setLocationRelativeTo(null); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setResizable(false);
-
-        // Set the default directory for the file chooser
         j.setCurrentDirectory(new File(".\\"));
 
         File selectedFile;

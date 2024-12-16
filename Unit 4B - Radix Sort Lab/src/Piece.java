@@ -1,7 +1,6 @@
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -22,9 +21,10 @@ public class Piece {
         b = Math.min(Math.max(b, 0), 255);
 
         this.c = new Color(r, g, b);
-        kirbyX = (1500 - 80 * kirbyCount) / (kirbyCount + 1) * (number + 1) + 80 * number;
-        kirbyY = 600;
+        kirbyX = (int) ((1500 / (kirbyCount + 1)) * (number + 0.5));
+        kirbyY = (int) ((1.76 * kirbyCount) + 566.94);
     }
+    
 
     public void drawKirby(Graphics2D GG, boolean isSelected) {
         BufferedImage buffy = new BufferedImage(100, 110, BufferedImage.TYPE_INT_ARGB);
@@ -103,8 +103,8 @@ public class Piece {
     
             newG.setTransform(originalTransform);
         }
-        buffy = scaleBufImg(buffy, (-0.0175 * kirbyCount) + 1.175);
-
+        buffy = scaleBufImg(buffy, (-0.01875 * kirbyCount) + 1.1875);
+        //buffy = scaleBufImg(buffy, .25);
         kirbyX = tempKX;
         kirbyY = tempKY;
         
@@ -112,7 +112,6 @@ public class Piece {
         GG.drawImage(buffy, kirbyX, kirbyY, buffy.getWidth(), buffy.getHeight(), null);
     }
     
-
     //Farhan code
     public BufferedImage scaleBufImg(BufferedImage b, double scaleFactor) {
         int w = b.getWidth();

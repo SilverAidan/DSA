@@ -9,52 +9,39 @@ import javax.swing.JOptionPane;
 public class RadixDriver {
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
         // Create the frame for displaying the Kirby sorting panel
-        JFrame frame = new JFrame();
-        JFileChooser j = new JFileChooser();
+        JFrame frame = new JFrame("Kirby Sorter 2.0");
+        JFileChooser j = new JFileChooser(new File(".\\"));
         frame.setSize(1500, 800);
-        frame.setTitle("Kirby Sorter 2.0");
-        frame.setLocationRelativeTo(null); 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setResizable(false);
-        j.setCurrentDirectory(new File(".\\"));
-
-        File selectedFile;
-        while (true) {
+        frame.setResizable(false);
+        frame.setLocationRelativeTo(null);
+        
+        // File selection loop
+        File selectedFile = null;
+        while (selectedFile == null || !selectedFile.getName().toLowerCase().endsWith(".csv")) {
             j.showOpenDialog(null);
             selectedFile = j.getSelectedFile();
-            if (selectedFile != null && selectedFile.getName().toLowerCase().endsWith(".csv")) {
-                break;  // Exit loop when a valid CSV is selected
+            if (selectedFile == null || !selectedFile.getName().toLowerCase().endsWith(".csv")) {
+                JOptionPane.showMessageDialog(null, "Please choose a valid CSV file.", "Invalid File", JOptionPane.INFORMATION_MESSAGE);
             }
-            // Show a dialog if the file is not a CSV
-            JOptionPane.showMessageDialog(null, "Please choose a valid CSV file.", "Invalid File", JOptionPane.INFORMATION_MESSAGE);
         }
+        
+        // MSD or LSD selection
+        int MSDLSD = JOptionPane.showOptionDialog(null, "Select an option:", "Choose Option", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"MSD", "LSD"}, "MSD");
 
-        // Read the CSV file and add the values to an ArrayList
+        // Read the CSV and create Piece objects
         ArrayList<Integer> arr = new ArrayList<>();
-        Scanner s = new Scanner(selectedFile);
-
-        while (s.hasNextLine()) {
-            String line = s.nextLine().trim();
-            try {
-                int value = Integer.parseInt(line);
-                arr.add(value);  // Add valid integer values to the list
-            } catch (NumberFormatException e) {
-                // Ignore lines that cannot be parsed as integers
+        try (Scanner s = new Scanner(selectedFile)) {
+            while (s.hasNextLine()) {
+                try {
+                    arr.add(Integer.parseInt(s.nextLine().trim()));
+                } catch (NumberFormatException ignored) {}
             }
         }
-        s.close();
+        Piece[] pieces = arr.stream().map(i -> new Piece(arr.indexOf(i), i, arr.size())).toArray(Piece[]::new);
 
-        // Create an array of Piece objects based on the parsed values
-        Piece[] pieces = new Piece[arr.size()];
-        for (int i = 0; i < arr.size(); i++) {
-            pieces[i] = new Piece(i, arr.get(i), arr.size());  // Create each Piece based on the pink value
-        }
-
-        // Create the Panel and add it to the frame
-        Panel p = new Panel(pieces);
-        frame.add(p);
-        frame.setVisible(true);  // Make the frame visible
-
-        System.out.println(arr);  // Optionally print the parsed array
+        // Create Panel and display
+        frame.add(new Panel(pieces));
+        frame.setVisible(true);
     }
 }

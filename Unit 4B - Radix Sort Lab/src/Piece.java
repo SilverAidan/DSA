@@ -82,9 +82,16 @@ public class Piece {
         int deltaR = Math.abs(currentR - idealR);
         int pinkScore = (int) (100 - Math.min(100, deltaR * 100 / idealR));
         newG.setColor(Color.BLACK);
-        newG.drawString("Pink: " + pinkScore, kirbyX + 20, kirbyY - 10);
-    
-        // If pink score is low, draw a golden item (like a star)
+
+        // Dynamically position the text slightly to the left
+        String pinkText = "Pink: " + pinkScore;
+        int textWidth = newG.getFontMetrics().stringWidth(pinkText);
+        int offset = 10; // Offset to move the text to the left
+        int textX = (buffy.getWidth() - textWidth) / 2 - offset;
+        int textY = 10; // Position near the top of the BufferedImage
+        newG.drawString(pinkText, textX, textY);
+
+        // If pink score is less than thirty, draw a fake crown
         if (pinkScore <= 30) {
             AffineTransform originalTransform = newG.getTransform();
             double angle = Math.toRadians(30);
@@ -96,7 +103,7 @@ public class Piece {
     
             newG.setTransform(originalTransform);
         }
-        buffy = scaleBufImg(buffy, 10/kirbyCount);
+        buffy = scaleBufImg(buffy, (-0.0175 * kirbyCount) + 1.175);
 
         kirbyX = tempKX;
         kirbyY = tempKY;

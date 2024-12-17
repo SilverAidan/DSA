@@ -1,12 +1,12 @@
 public class Radix {
-    public static void lsdRadixSort(Piece[] pieces) throws InterruptedException {
+    public static void lsdRadixSort(Piece[] pieces, Panel p) throws InterruptedException {
         int maxDigits = getMaxDigits(pieces); // Get the maximum number of digits
         for (int digit = 0; digit < maxDigits; digit++) {
-            countSort(pieces, digit); // Sort the array by the current digit
+            countSort(pieces, digit, p); // Sort the array by the current digit
         }
     }
 
-    public static void msdRadixSort(Piece[] pieces) throws InterruptedException {
+    public static void msdRadixSort(Piece[] pieces, Panel p) throws InterruptedException {
         int maxDigits = getMaxDigits(pieces);  // Get the number of digits in the largest number
         msdSortHelper(pieces, 0, pieces.length - 1, maxDigits - 1);
     }
@@ -52,20 +52,36 @@ public class Radix {
         }
     }
 
-    public static void countSort(Piece[] pieces, int digit) throws InterruptedException {
+    public static void countSort(Piece[] pieces, int digit, Panel panel) throws InterruptedException {
         int[] counts = new int[10];
         for (int i = 0; i < pieces.length; i++) {
             counts[getDigit(pieces[i], digit)]++;
         }
+        
+        // Update the panel's count array state
+        System.arraycopy(counts, 0, Panel.currentCounts, 0, counts.length);
+        panel.repaint();
+        Thread.sleep(500);
+        
         for (int i = 1; i < counts.length; i++) {
             counts[i] += counts[i - 1];
+            // Update cumulative counts
+            System.arraycopy(counts, 0, Panel.currentCounts, 0, counts.length);
+            panel.repaint();
+            Thread.sleep(500);
         }
+
         Piece[] newPieces = new Piece[pieces.length];
         for (int i = pieces.length - 1; i >= 0; i--) {
             newPieces[--counts[getDigit(pieces[i], digit)]] = pieces[i];
+            // Update counts after each placement
+            System.arraycopy(counts, 0, Panel.currentCounts, 0, counts.length);
+            panel.repaint();
+            Thread.sleep(500);
         }
-        // Copy sorted pieces back to the original array
         System.arraycopy(newPieces, 0, pieces, 0, pieces.length);
+        panel.repaint();
+        Thread.sleep(500);
     }
 
     // Utility method to find the number of digits in the largest number

@@ -28,7 +28,7 @@ public class Piece {
         this.c = new Color(r, g, b);
         this.pinkValue = pinkValue;
         kirbyX = (int) ((1500 / (kirbyCount + 1)) * (number + 0.5));
-        kirbyY = (int) ((1.76 * kirbyCount) + 566.94);
+        kirbyY = 50;
     }
     
 

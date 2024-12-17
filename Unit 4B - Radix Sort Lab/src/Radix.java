@@ -1,18 +1,17 @@
 public class Radix {
-
-    public static void lsdRadixSort(Piece[] pieces) {
+    public static void lsdRadixSort(Piece[] pieces) throws InterruptedException {
         int maxDigits = getMaxDigits(pieces); // Get the maximum number of digits
         for (int digit = 0; digit < maxDigits; digit++) {
             countSort(pieces, digit); // Sort the array by the current digit
         }
     }
 
-    public static void msdRadixSort(Piece[] pieces) {
+    public static void msdRadixSort(Piece[] pieces) throws InterruptedException {
         int maxDigits = getMaxDigits(pieces);  // Get the number of digits in the largest number
         msdSortHelper(pieces, 0, pieces.length - 1, maxDigits - 1);
     }
 
-    private static void msdSortHelper(Piece[] pieces, int start, int end, int digitPlace) {
+    private static void msdSortHelper(Piece[] pieces, int start, int end, int digitPlace) throws InterruptedException {
         if (start >= end || digitPlace < 0) {
             return; // Base case: single element or no more digits
         }
@@ -53,7 +52,7 @@ public class Radix {
         }
     }
 
-    public static void countSort(Piece[] pieces, int digit) {
+    public static void countSort(Piece[] pieces, int digit) throws InterruptedException {
         int[] counts = new int[10];
         for (int i = 0; i < pieces.length; i++) {
             counts[getDigit(pieces[i], digit)]++;
@@ -78,7 +77,7 @@ public class Radix {
         return maxDigits;
     }
 
-    // Get digit method (already provided)
+    // Get digit method 
     private static int getDigit(Piece piece, int digit) {
         String s = Integer.toString(piece.pinkValue);
         if (digit >= s.length()) {

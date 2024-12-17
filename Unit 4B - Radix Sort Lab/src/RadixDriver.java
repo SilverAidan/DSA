@@ -34,7 +34,7 @@ public class RadixDriver {
         slider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                slide = slider.getValue();
+                slide = 100 - slider.getValue(); // Invert the value for delay
             }
         });
         
@@ -72,7 +72,8 @@ public class RadixDriver {
         }
 
         // Create Panel and display
-        frame.add(new Panel(pieces));
+        Panel panel = new Panel(pieces);
+        frame.add(panel);
         frame.setVisible(true);
         if(MSDLSD == 1){
             Radix.msdRadixSort(pieces);

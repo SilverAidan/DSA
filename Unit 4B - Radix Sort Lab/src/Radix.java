@@ -1,27 +1,25 @@
 public class Radix {
-    int[] numbers;
-    int max;
 
-    public void lsdRadixSort() {
-        int maxDigits = getMaxDigits(); // Get the maximum number of digits
+    public static void lsdRadixSort(Piece[] pieces) {
+        int maxDigits = getMaxDigits(pieces); // Get the maximum number of digits
         for (int digit = 0; digit < maxDigits; digit++) {
-            countSort(digit); // Sort the array by the current digit
+            countSort(pieces, digit); // Sort the array by the current digit
         }
     }
 
-    public void msdRadixSort() {
-        int maxDigits = getMaxDigits();  // Get the number of digits in the largest number
-        msdSortHelper(0, numbers.length - 1, maxDigits - 1);
+    public static void msdRadixSort(Piece[] pieces) {
+        int maxDigits = getMaxDigits(pieces);  // Get the number of digits in the largest number
+        msdSortHelper(pieces, 0, pieces.length - 1, maxDigits - 1);
     }
 
-    private void msdSortHelper(int start, int end, int digitPlace) {
+    private static void msdSortHelper(Piece[] pieces, int start, int end, int digitPlace) {
         if (start >= end || digitPlace < 0) {
             return; // Base case: single element or no more digits
         }
     
         int[] counts = new int[10]; // Assumes decimal system (0-9)
         for (int i = start; i <= end; i++) {
-            counts[getDigit(numbers[i], digitPlace)]++;
+            counts[getDigit(pieces[i], digitPlace)]++;
         }
         
         int[] cumulativeCounts = new int[10];
@@ -31,15 +29,15 @@ public class Radix {
         }
         
         // Create new array for placing elements in the correct bucket order
-        int[] newNums = new int[end - start + 1];
+        Piece[] newPieces = new Piece[end - start + 1];
         for (int i = end; i >= start; i--) {
-            int digitValue = getDigit(numbers[i], digitPlace);
-            newNums[--cumulativeCounts[digitValue]] = numbers[i];
+            int digitValue = getDigit(pieces[i], digitPlace);
+            newPieces[--cumulativeCounts[digitValue]] = pieces[i];
         }
     
         // Copy sorted elements back to the original array
-        for (int i = 0; i < newNums.length; i++) {
-            numbers[start + i] = newNums[i];
+        for (int i = 0; i < newPieces.length; i++) {
+            pieces[start + i] = newPieces[i];
         }
     
         // Recurse on each bucket of the sorted digits
@@ -50,38 +48,39 @@ public class Radix {
         
             // Recurse on the bucket if it has more than one element
             if (bucketStart < bucketEnd) {
-                msdSortHelper(bucketStart, bucketEnd, digitPlace - 1);
+                msdSortHelper(pieces, bucketStart, bucketEnd, digitPlace - 1);
             }
         }
     }
 
-    public void countSort(int digit) {
-        int[] counts = new int[max + 1];
-        for (int i = 0; i < numbers.length; i++) {
-            counts[getDigit(numbers[i], digit)]++;
+    public static void countSort(Piece[] pieces, int digit) {
+        int[] counts = new int[10];
+        for (int i = 0; i < pieces.length; i++) {
+            counts[getDigit(pieces[i], digit)]++;
         }
         for (int i = 1; i < counts.length; i++) {
             counts[i] += counts[i - 1];
         }
-        int[] newNums = new int[numbers.length];
-        for (int i = numbers.length - 1; i >= 0; i--) {
-            newNums[--counts[getDigit(numbers[i], digit)]] = numbers[i];
+        Piece[] newPieces = new Piece[pieces.length];
+        for (int i = pieces.length - 1; i >= 0; i--) {
+            newPieces[--counts[getDigit(pieces[i], digit)]] = pieces[i];
         }
-        numbers = newNums;
+        // Copy sorted pieces back to the original array
+        System.arraycopy(newPieces, 0, pieces, 0, pieces.length);
     }
 
     // Utility method to find the number of digits in the largest number
-    private int getMaxDigits() {
+    private static int getMaxDigits(Piece[] pieces) {
         int maxDigits = 0;
-        for (int num : numbers) {
-            maxDigits = Math.max(maxDigits, Integer.toString(num).length());
+        for (Piece piece : pieces) {
+            maxDigits = Math.max(maxDigits, Integer.toString(piece.pinkValue).length());
         }
         return maxDigits;
     }
 
     // Get digit method (already provided)
-    public int getDigit(int num, int digit) {
-        String s = Integer.toString(num);
+    private static int getDigit(Piece piece, int digit) {
+        String s = Integer.toString(piece.pinkValue);
         if (digit >= s.length()) {
             return 0; // Return 0 if digit index exceeds the number's length
         }

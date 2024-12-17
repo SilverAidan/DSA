@@ -48,5 +48,11 @@ public class RadixDriver {
         // Create Panel and display
         frame.add(new Panel(pieces));
         frame.setVisible(true);
+        // if(MSDLSD == 1){
+        //     Radix.msdRadixSort(pieces);
+        // }
+        // else{
+        //     Radix.lsdRadixSort(pieces);
+        // }
     }
 }

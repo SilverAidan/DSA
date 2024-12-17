@@ -9,6 +9,11 @@ public class Piece {
     Color c;
     int kirbyX, kirbyY;
     public static int kirbyCount;
+    int pinkValue;
+
+    public int pinkValue() {
+        return pinkValue;
+    }
 
     public Piece(int number, int pinkValue, int kirbyCount) {
         int idealR = 250; // The ideal red value for perfect pink
@@ -107,8 +112,6 @@ public class Piece {
         //buffy = scaleBufImg(buffy, .25);
         kirbyX = tempKX;
         kirbyY = tempKY;
-        
-        System.out.println(kirbyX + ", " + kirbyY + ", " + buffy.getWidth() + ", " + buffy.getHeight());
         GG.drawImage(buffy, kirbyX, kirbyY, buffy.getWidth(), buffy.getHeight(), null);
     }
     

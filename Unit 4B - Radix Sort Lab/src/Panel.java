@@ -1,12 +1,10 @@
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class Panel extends JPanel {
     private Piece[] kirbies;
-    private Boolean isSelected = false;
+    private boolean isSelected = false;
     
     // Constructor that accepts an array of Kirbies
     public Panel(Piece[] kirbies) {
@@ -56,5 +54,26 @@ public class Panel extends JPanel {
     // Setter for the kirbies array
     public void setKirbies(Piece[] kirbies) {
         this.kirbies = kirbies;
+    }
+
+    // Method to animate the sorting
+    public void animateSorting() {
+        new Timer(50, new ActionListener() {
+            int currentStep = 0;
+            int totalSteps = kirbies.length * 10; // Adjust based on the sorting steps
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (currentStep < totalSteps) {
+                    // Call the next step of the sorting algorithm (you can break your sorting into steps)
+                    // Example: Update positions of Kirbies here (e.g., swap pieces)
+
+                    repaint(); // Trigger a repaint to show the updated sorting state
+                    currentStep++;
+                } else {
+                    ((Timer) e.getSource()).stop(); // Stop the timer when done
+                }
+            }
+        }).start();
     }
 }

@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -5,16 +6,37 @@ import java.util.Scanner;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JSlider;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class RadixDriver {
+    public static int slide;
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
         // Create the frame for displaying the Kirby sorting panel
         JFrame frame = new JFrame("Kirby Sorter 2.0");
         JFileChooser j = new JFileChooser(new File(".\\"));
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+
+        slider.setMajorTickSpacing(5); 
+        slider.setMinorTickSpacing(1);  
+        slider.setPaintTicks(true);     
+        slider.setPaintLabels(true);   
+        slider.setValue(100);
+
         frame.setSize(1500, 800);
+        frame.add(slider, BorderLayout.SOUTH);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.setLocationRelativeTo(null);
+        
+        // Add ChangeListener to the slider
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                slide = slider.getValue();
+            }
+        });
         
         // File selection loop
         File selectedFile = null;
@@ -34,7 +56,6 @@ public class RadixDriver {
         // MSD or LSD selection
         int MSDLSD = JOptionPane.showOptionDialog(null, "Select an option:", "Choose Option", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"MSD", "LSD"}, "MSD");
 
-        // Read the CSV and create Piece objects
         ArrayList<Integer> arr = new ArrayList<>();
         try (Scanner s = new Scanner(selectedFile)) {
             while (s.hasNextLine()) {
@@ -43,16 +64,21 @@ public class RadixDriver {
                 } catch (NumberFormatException ignored) {}
             }
         }
-        Piece[] pieces = arr.stream().map(i -> new Piece(arr.indexOf(i), i, arr.size())).toArray(Piece[]::new);
+
+        // Create the Piece objects with the correct index
+        Piece[] pieces = new Piece[arr.size()];
+        for (int i = 0; i < arr.size(); i++) {
+            pieces[i] = new Piece(i, arr.get(i), arr.size());
+        }
 
         // Create Panel and display
         frame.add(new Panel(pieces));
         frame.setVisible(true);
-        // if(MSDLSD == 1){
-        //     Radix.msdRadixSort(pieces);
-        // }
-        // else{
-        //     Radix.lsdRadixSort(pieces);
-        // }
+        if(MSDLSD == 1){
+            Radix.msdRadixSort(pieces);
+        }
+        else{
+            Radix.lsdRadixSort(pieces);
+        }
     }
 }

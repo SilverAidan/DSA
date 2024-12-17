@@ -18,14 +18,19 @@ public class RadixDriver {
         
         // File selection loop
         File selectedFile = null;
-        while (selectedFile == null || !selectedFile.getName().toLowerCase().endsWith(".csv")) {
+        while (true) {
             j.showOpenDialog(null);
             selectedFile = j.getSelectedFile();
-            if (selectedFile == null || !selectedFile.getName().toLowerCase().endsWith(".csv")) {
+            if (selectedFile == null) {
+                System.exit(0); 
+            }
+            if (selectedFile.getName().toLowerCase().endsWith(".csv")) {
+                break; // Valid file selected, exit the loop
+            } else {
                 JOptionPane.showMessageDialog(null, "Please choose a valid CSV file.", "Invalid File", JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        
+
         // MSD or LSD selection
         int MSDLSD = JOptionPane.showOptionDialog(null, "Select an option:", "Choose Option", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, new String[]{"MSD", "LSD"}, "MSD");
 

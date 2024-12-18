@@ -1,4 +1,5 @@
 public class Radix {
+    // LSD (Least Significant Digit) Radix Sort
     public static void lsdRadixSort(Piece[] pieces, Panel p) throws InterruptedException {
         int maxDigits = getMaxDigits(pieces); // Get the maximum number of digits
         for (int digit = 0; digit < maxDigits; digit++) {
@@ -7,17 +8,20 @@ public class Radix {
         p.drawSortedKirbies(pieces);
     }
 
+    // MSD (Most Significant Digit) Radix Sort entry point
     public static void msdRadixSort(Piece[] pieces, Panel panel) throws InterruptedException {
         int maxDigits = getMaxDigits(pieces);
         msdSortHelper(pieces, 0, pieces.length - 1, maxDigits - 1, panel);
         panel.drawSortedKirbies(pieces);
     }
 
+    // Recursive helper for MSD sort
     private static void msdSortHelper(Piece[] pieces, int start, int end, int digitPlace, Panel panel) throws InterruptedException {
         if (start >= end || digitPlace < 0) {
             return;
         }
     
+        // Count frequency of each digit
         int[] counts = new int[10];
         // Add animations for counting phase
         for (int i = start; i <= end; i++) {
@@ -28,6 +32,7 @@ public class Radix {
             panel.repaint();
         }
         
+        // Calculate cumulative counts
         int[] cumulativeCounts = new int[10];
         cumulativeCounts[0] = counts[0];
         for (int i = 1; i < 10; i++) {
@@ -37,6 +42,7 @@ public class Radix {
             Thread.sleep(500/RadixDriver.slide);
         }
         
+        // Sort pieces into new array based on current digit
         Piece[] newPieces = new Piece[end - start + 1];
         for (int i = end; i >= start; i--) {
             int digitValue = getDigit(pieces[i], digitPlace);
@@ -52,6 +58,7 @@ public class Radix {
         panel.repaint();
         Thread.sleep(500/RadixDriver.slide);
     
+        // Recursively sort sub-arrays for each digit
         for (int i = 0; i < 10; i++) {
             int bucketStart = (i == 0) ? start : cumulativeCounts[i - 1];
             int bucketEnd = (i == 9) ? end : cumulativeCounts[i] - 1;
@@ -61,6 +68,7 @@ public class Radix {
         }
     }
 
+    // Counting sort for a specific digit position
     public static void countSort(Piece[] pieces, int digit, Panel panel) throws InterruptedException {
         int[] counts = new int[10];
         
@@ -100,7 +108,7 @@ public class Radix {
         Thread.sleep(500/RadixDriver.slide);
     }
 
-    // Utility method to find the number of digits in the largest number
+    // Find number of digits in largest number
     private static int getMaxDigits(Piece[] pieces) {
         int maxDigits = 0;
         for (Piece piece : pieces) {
@@ -109,7 +117,7 @@ public class Radix {
         return maxDigits;
     }
 
-    // Get digit method 
+    // Extract digit at specified position
     private static int getDigit(Piece piece, int digit) {
         String s = Integer.toString(piece.pinkValue);
         if (digit >= s.length()) {

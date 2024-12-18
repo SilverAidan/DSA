@@ -17,7 +17,7 @@ public class Panel extends JPanel {
         this.kirbies = kirbies;
     }
     
-    // Paint the component (background, pillars, and kirbies)
+    // Render background, counting array, and Kirby pieces
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g); 
@@ -99,11 +99,13 @@ public class Panel extends JPanel {
         this.kirbies = kirbies;
     }
     
+    // Calculate final x position for sorted pieces
     private int calculateFinalX(int index, int totalPieces) {
         int spacing = Math.max(100, (1400 - 100 * totalPieces) / (totalPieces + 1));
         return 50 + spacing * (index + 1) + 100 * index;
     }
 
+    // Display final sorted arrangement
     public void drawSortedKirbies(Piece[] pieces) throws InterruptedException {
         sortedPieces = new Piece[pieces.length];
         
@@ -158,6 +160,7 @@ public class Panel extends JPanel {
         }
     }
     
+    // Animate piece movement to counting box
     public void animatePieceToBox(Piece piece, int boxIndex) throws InterruptedException {
         selectedPiece = piece;
         int boxWidth = 50;

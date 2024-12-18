@@ -6,16 +6,15 @@ import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 
 public class Piece {
+    // Visual properties
     Color c;
     int kirbyX, kirbyY;
     public static int kirbyCount;
     int pinkValue;
 
-    public int pinkValue() {
-        return pinkValue;
-    }
-
+    // Constructor - creates Kirby with color based on value
     public Piece(int number, int pinkValue, int kirbyCount) {
+        // Calculate pink shade based on value
         int idealR = 250; // The ideal red value for perfect pink
         
         int r = (int)(idealR * (pinkValue / 100.0));
@@ -34,7 +33,7 @@ public class Piece {
         this.pinkValue = pinkValue;
     }
     
-
+    // Render Kirby character
     public void drawKirby(Graphics2D GG, boolean isSelected) {
         BufferedImage buffy = new BufferedImage(100, 110, BufferedImage.TYPE_INT_ARGB);
         Graphics newGG = buffy.getGraphics();
@@ -119,7 +118,7 @@ public class Piece {
         GG.drawImage(buffy, kirbyX, kirbyY, buffy.getWidth(), buffy.getHeight(), null);
     }
     
-    //Farhan code
+    // Scale buffered image by factor
     public BufferedImage scaleBufImg(BufferedImage b, double scaleFactor) {
         int w = b.getWidth();
         int h = b.getHeight();

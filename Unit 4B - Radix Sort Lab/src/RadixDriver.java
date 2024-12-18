@@ -11,18 +11,18 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class RadixDriver {
-    public static int slide;
+    public static int slide = 15; // Initialize to 15 for default speed
     public static void main(String[] args) throws InterruptedException, FileNotFoundException {
         // Create the frame for displaying the Kirby sorting panel
         JFrame frame = new JFrame("Kirby Sorter 2.0");
         JFileChooser j = new JFileChooser(new File(".\\"));
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 100, 15);  // Set initial value to 15
 
-        slider.setMajorTickSpacing(5); 
+        slider.setMajorTickSpacing(10); 
         slider.setMinorTickSpacing(1);  
         slider.setPaintTicks(true);     
         slider.setPaintLabels(true);   
-        slider.setValue(100);
+        slider.setValue(15);  // Set initial value to 15
 
         frame.setSize(1500, 800);
         frame.add(slider, BorderLayout.SOUTH);
@@ -34,7 +34,7 @@ public class RadixDriver {
         slider.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
-                slide = 1/slider.getValue(); // Invert the value for delay
+                slide = Math.max(1, slider.getValue()); // Ensure never zero
             }
         });
         
@@ -75,7 +75,7 @@ public class RadixDriver {
         Panel panel = new Panel(pieces);
         frame.add(panel);
         frame.setVisible(true);
-        if(MSDLSD == 1){
+        if(MSDLSD == 0){  // Changed from 1 to 0 for MSD
             Radix.msdRadixSort(pieces, panel);
         }
         else{

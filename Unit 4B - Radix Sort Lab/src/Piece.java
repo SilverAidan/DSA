@@ -26,9 +26,12 @@ public class Piece {
         b = Math.min(Math.max(b, 0), 255);
 
         this.c = new Color(r, g, b);
-        this.pinkValue = pinkValue;
+        
+        // Revert to original spacing formula
         kirbyX = (int) ((1500 / (kirbyCount + 1)) * (number + 0.5));
-        kirbyY = 100; // Increased from 50 to 100 for better initial positioning
+        kirbyY = 100;
+        
+        this.pinkValue = pinkValue;
     }
     
 

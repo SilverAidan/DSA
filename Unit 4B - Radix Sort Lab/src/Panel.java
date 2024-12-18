@@ -6,12 +6,8 @@ import javax.swing.JPanel;
 
 public class Panel extends JPanel {
     private Piece[] kirbies;
-    private Boolean isSelected = false;
     public static int[] currentCounts = new int[10];
     private Piece selectedPiece = null;
-    private int selectedPieceTargetX = 0;
-    private int selectedPieceTargetY = 0;
-    private int animationSteps = 0;
     private Piece[] sortedPieces = null;
     
     // Constructor that accepts an array of Kirbies
@@ -103,6 +99,11 @@ public class Panel extends JPanel {
         this.kirbies = kirbies;
     }
     
+    private int calculateFinalX(int index, int totalPieces) {
+        int spacing = Math.max(100, (1400 - 100 * totalPieces) / (totalPieces + 1));
+        return 50 + spacing * (index + 1) + 100 * index;
+    }
+
     public void drawSortedKirbies(Piece[] pieces) throws InterruptedException {
         sortedPieces = new Piece[pieces.length];
         
@@ -112,40 +113,45 @@ public class Panel extends JPanel {
             sortedPieces[i] = new Piece(i, pieces[i].pinkValue, pieces.length);
             sortedPieces[i].kirbyX = pieces[i].kirbyX;
             sortedPieces[i].kirbyY = pieces[i].kirbyY;
+            // Revert to original spacing formula
             finalXPositions[i] = (int) ((1500 / (pieces.length + 1)) * (i + 0.5));
         }
         
         // Animate to center
+        int boxWidth = 50;
+        int startX = (getWidth() - (boxWidth * 10)) / 2;
+        
         for (int i = 0; i < pieces.length; i++) {
-            int boxWidth = 50;
-            int startX = (getWidth() - (boxWidth * 10)) / 2;
+            final int initialX = sortedPieces[i].kirbyX;
+            final int initialY = sortedPieces[i].kirbyY;
             int targetX = startX + (sortedPieces[i].pinkValue / 10 * boxWidth);
             
-            // Move to center array
-            for (int step = 0; step < 10; step++) {
-                sortedPieces[i].kirbyX = pieces[i].kirbyX + ((targetX - pieces[i].kirbyX) * step / 10);
-                sortedPieces[i].kirbyY = pieces[i].kirbyY + ((200 - pieces[i].kirbyY) * step / 10);
+            for (int step = 0; step <= 10; step++) {
+                double progress = step / 10.0;
+                sortedPieces[i].kirbyX = (int) (initialX + (targetX - initialX) * progress);
+                sortedPieces[i].kirbyY = (int) (initialY + (200 - initialY) * progress);
                 repaint();
                 Thread.sleep(Math.max(1, 250/RadixDriver.slide));
             }
         }
         
-        Thread.sleep(500); // Pause to show all pieces in center
+        Thread.sleep(500);
         
-        // Animate to final positions with precise control
+        // Animate to final positions with proper spacing
         for (int i = 0; i < pieces.length; i++) {
-            int startX = sortedPieces[i].kirbyX;
-            int startY = sortedPieces[i].kirbyY;
+            final int startingX = sortedPieces[i].kirbyX;
+            final int startingY = sortedPieces[i].kirbyY;
+            final int endingX = finalXPositions[i];
             
-            for (int step = 0; step < 10; step++) {
+            for (int step = 0; step <= 10; step++) {
                 double progress = step / 10.0;
-                sortedPieces[i].kirbyX = (int) (startX + (finalXPositions[i] - startX) * progress);
-                sortedPieces[i].kirbyY = (int) (startY + (550 - startY) * progress);
+                sortedPieces[i].kirbyX = (int) (startingX + (endingX - startingX) * progress);
+                sortedPieces[i].kirbyY = (int) (startingY + (550 - startingY) * progress);
                 repaint();
                 Thread.sleep(Math.max(1, 250/RadixDriver.slide));
             }
             
-            // Set exact final position
+            // Ensure final position is exact and valid
             sortedPieces[i].kirbyX = finalXPositions[i];
             sortedPieces[i].kirbyY = 550;
             repaint();
@@ -158,7 +164,7 @@ public class Panel extends JPanel {
         int startX = (getWidth() - (boxWidth * 10)) / 2;
         int targetX = startX + (boxIndex * boxWidth);
         
-        // Store original position in local variables
+        // Store original position exactly as is, without validation
         final int originalX = piece.kirbyX;
         final int originalY = piece.kirbyY;
         
@@ -180,11 +186,11 @@ public class Panel extends JPanel {
             Thread.sleep(Math.max(1, 500/RadixDriver.slide));
         }
         
-        // Force exact original position
+        // Return to exact original position
         piece.kirbyX = originalX;
         piece.kirbyY = originalY;
         selectedPiece = null;
         repaint();
-        Thread.sleep(10); // Small delay to ensure final position is rendered
+        Thread.sleep(10);
     }
 }

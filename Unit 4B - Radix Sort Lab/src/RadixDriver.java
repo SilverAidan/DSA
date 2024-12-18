@@ -16,7 +16,7 @@ public class RadixDriver {
         // Create the frame for displaying the Kirby sorting panel
         JFrame frame = new JFrame("Kirby Sorter 2.0");
         JFileChooser j = new JFileChooser(new File(".\\"));
-        JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 100, 15);  // Set initial value to 15
+        JSlider slider = new JSlider(JSlider.HORIZONTAL, 1, 99, 15);  // Set initial value to 15
 
         slider.setMajorTickSpacing(10); 
         slider.setMinorTickSpacing(1);  

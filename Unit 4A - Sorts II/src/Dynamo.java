@@ -1,4 +1,4 @@
-public class App {
+public class Dynamo {
     public static void main(String[] args) throws Exception {
         Node head = new Node("MYAHDaD");
         for (int i = 0; i < 8; i++) {

@@ -1,108 +1,177 @@
 import java.util.HashMap;
 
 public class Dynamo {
-    static HashMap<Integer, Long> memo = new HashMap<Integer, Long>();
-    static HashMap<Integer, Integer> totals = new HashMap<Integer, Integer>();
-    public static int knapDumb = 0;
-    public static void main(String[] args) throws Exception {
-        System.out.println(fib(8));
-        int[] denoms = {1, 5, 10, 25};
-        System.out.println(cointCount(denoms, 34));
-        System.out.println(newton(4, 1000));
-        double[] values = {100, 200, 50, 300, 400, 25};
-        double[] weights = {3, 5, 10, 1, 2, 1};
-        System.out.println(knapsack(values, weights, 10, 0, 0));
-        System.out.println(knapDumb);
+	static HashMap<Integer, Long> memo = new HashMap<Integer,Long>();
+	static HashMap<Integer, Integer> totals = new HashMap<Integer,Integer>();
+	static int dumbDiceCount = 0;
+	static int MCount = 0;
+	static int knapDumb = 0;
+	public static void main(String[] args) {
+		System.out.println(fib(8));
+		int[] denoms = {1,5,10,25};
+		System.out.println(coinCount(denoms,10));
+		System.out.println(diceCountD(8,24));
+		System.out.println(dumbDiceCount);
+		System.out.println("Memo "+ diceCountM(8,24));
+		System.out.println(MCount);
+		
+		int[][] diceTable = new int[9][25];
+		for(int i = 1; i<=6;i++)
+			diceTable[1][i] = 1;
+		for(int dice = 2; dice<9;dice++)
+			for(int target = 1; target<25;target++) {
+				for(int i = 1; i<=6;i++)
+					if(target-i>=0)
+						diceTable[dice][target] += diceTable[dice-1][target-i];
+			}
+		System.out.println(diceTable[8][24]);
+		//8*24*6 is 
+		
+		System.out.println(newton(4,1000));
+		double[] values = {100,200,50,300,400,25};
+		double[] weights = {3,5,10,1,2,1};
+		System.out.println(knapsack(values,weights,10,0,0));
+		System.out.println(knapDumb);
+        System.out.println("Catalan");
+        System.out.println(catalan(5));
+	}
+    public static long catalan(int n){
+        long[] memoCata = new long[n+1];
+        return theCatIsOutOfTheBag(n, memoCata);
     }
-    public static double knapSmart(double[] values, double[] weights, double capacity, int i, double max){
-        double[][] memo = new double[weights.length][(int)capacity+1];
-        for(int j = 0; j < weights.length; j++){
-            for(int k = 0; k < capacity+1; k++){
-                memo[j][k] = -1;
-            }
+
+    public static long theCatIsOutOfTheBag(int n, long[] memo){
+        if(n < 0){
+            return 0;
         }
-        return knapsackSmartH(values, weights, capacity, i, 0, memo)
-    }
-    public static double knapsackSmartH(double[] values, double[] weights, double capacity, int i, double max, double[][] memo){
-        knapDumb++;
-        if(i == values.length)
-            return max;
-        double with = 0;
-        if(weights[i] <= capacity)
-            with = knapsack(values, weights, capacity-weights[i], i+1, max+values[i]);
-        double without = knapsack(values, weights, capacity, i+1, max);
-        return Math.max(with, without);
-    }
-
-    public static double knapsack(double[] values, double[] weights, double capacity, int i, double max){
-        knapDumb++;
-        if(i == values.length)
-            return max;
-        double with = 0;
-        if(weights[i] <= capacity)
-            with = knapsack(values, weights, capacity-weights[i], i+1, max+values[i]);
-        double without = knapsack(values, weights, capacity, i+1, max);
-        return Math.max(with, without);
-    }
-    
-
-    public static long fib(int n){
-        if (n<=2){
+        if(n == 1 || n == 0){
             return 1;
         }
-        if(memo.containsKey(n)){
-            return memo.get(n);
+        if(memo[n] != 0){
+            return memo[n];
         }
-        memo.put(n, fib(n-1) + fib(n-2));
-        System.out.println(n);
-        return memo.get(n);
+        long cat = 0;
+        for(int i = 0; i < n; i++){
+            cat += theCatIsOutOfTheBag(i, memo) * theCatIsOutOfTheBag(n - 1 - i, memo);
+        }
+        memo[n] = cat;
+        return cat;
     }
 
-    public static long fibBad(int n){
-        if (n<=2){
-            return 1;
-        }
-        System.out.println(n);
-        return fibBad(n-1) + fibBad(n-2);
-    }
+	public static double knapSmart(double[] values, double[] weights, double cap,int i,double max) {
+		double[][] memo = new double[weights.length][(int)(cap+1)];
+		for(int row =0; row<memo.length;row++)
+			for(int col = 0; col<memo[row].length;col++)
+				memo[row][col] = -1;
+		return knapsackSmartH(values,weights,cap,i,0,memo);
+	}
 
-    public static double newton(double guess, int trials){
-        if(trials == 0){
-            return Double.POSITIVE_INFINITY;
-        }
-        if(Math.abs(function(guess)) < 0.0000001){
-            return guess;
-        }
-        return newton(guess - function(guess)/derivative(guess), trials - 1);
-    }
+	public static double knapsackSmartH(double[] values, double[] weights, double cap,int i,double max, double[][] memo) {
+		knapDumb++;
+		if(i==values.length)
+			return max;
+		if(memo[i][(int)cap]>-.9)
+			return memo[i][(int)cap];
+		double with = 0;
+		if(weights[i]<=cap)
+			with =  knapsackSmartH(values,weights,cap-weights[i],i+1,max+values[i], memo);
+		double without = knapsackSmartH(values, weights,cap,i+1, max, memo);
+		memo[i][(int)cap] = Math.max(with, without);
+		return memo[i][(int)cap];
+	}
 
-    private static double function(double x) {
-        return x*x-4;
+	public static double knapsack(double[] values, double[] weights, double cap,int i,double max) {
+		knapDumb++;
+		if(i==values.length)
+			return max;
+		double with = 0;
+		if(weights[i]<=cap)
+			with =  knapsack(values,weights,cap-weights[i],i+1,max+values[i]);
+		double without = knapsack(values, weights,cap,i+1, max);
+		return Math.max(with, without);
+	}
+	
+	public static double newton(double x, int trials) {
+		if(trials==0)
+			return Double.POSITIVE_INFINITY;
+		if(Math.abs(function(x))<.00001)
+				return x;
+		return newton(x-function(x)/derivative(x),trials-1);
+	}
+
+	private static double function(double x) {
+        return Math.sin(x);
     }
 
     private static double derivative(double x) {
-        return 2*x;
+        return Math.cos(x);
     }
 
+	public static int diceCountM(int dice, int target) {
+		int[][] memo = new int[dice+1][target+1];
+		return diceCountMH(dice,target,memo);
+		
+	}
 
-    public static int cointCount(int[] denom, int total){
-        if(total < 0){
-           return Integer.MAX_VALUE;
-        }
-        if(total == 0){
-            return 0;
-        }
-        if(totals.containsKey(total)){
-            return totals.get(total);
-        }
-        int count = Integer.MAX_VALUE;
-        for(int coin: denom){
-            int result = cointCount(denom, total - coin);
-            if(result != Integer.MAX_VALUE) {
-                count = Math.min(count, result + 1);
-            }
-        }
-        totals.put(total, count);
-        return count;
-    }
+	public static int diceCountMH(int dice, int target, int[][] memo) {
+		MCount++;
+		if(dice==0&&target==0)
+			return 1;
+		if(dice<=0||target<=0)
+			return 0;
+		if(memo[dice][target]!=0)
+			return memo[dice][target];
+		int count = 0;
+		for(int i = 1; i<=6;i++) 
+			count+= diceCountMH(dice-1,target-i,memo);
+		memo[dice][target]= count;
+		return count;
+	}
+	
+	public static int diceCountD(int dice, int target) {
+		dumbDiceCount++;
+		if(dice==0&&target==0)
+			return 1;
+		if(dice<=0||target<=0)
+			return 0;
+		int count = 0;
+		for(int i = 1; i<=6;i++) 
+			count+= diceCountD(dice-1,target-i);
+		return count;
+	}
+	
+	public static long fib(int n) {
+		if(n<=2)
+			return 1;
+		if(memo.containsKey(n))
+			return memo.get(n);
+		memo.put(n, fib(n-1)+fib(n-2));
+		System.out.println(n);
+		return memo.get(n);
+	}
+
+	public static long fibBad(int n) {
+		if(n<=2)
+			return 1;
+		System.out.println(n);
+		return  fibBad(n-1)+fibBad(n-2);
+		
+	}
+	
+	public static int coinCount(int[] denom, int total) {
+		if(total<0)
+			return Integer.MAX_VALUE;
+		if(total==0)
+			return 0;
+		if(totals.containsKey(total))
+			return totals.get(total);
+		
+		int count = Integer.MAX_VALUE;
+		for(int coin:denom) {
+			count = Math.min(count, coinCount(denom,total-coin)); 
+		}
+		count++;
+		totals.put(total, count);
+		return count;
+	}
 }

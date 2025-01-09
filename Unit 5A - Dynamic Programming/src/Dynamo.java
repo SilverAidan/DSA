@@ -6,6 +6,7 @@ public class Dynamo {
 	static int dumbDiceCount = 0;
 	static int MCount = 0;
 	static int knapDumb = 0;
+	static int knapSmart = 0;
 	public static void main(String[] args) {
 		System.out.println(fib(8));
 		int[] denoms = {1,5,10,25};
@@ -32,10 +33,39 @@ public class Dynamo {
 		double[] weights = {3,5,10,1,2,1};
 		System.out.println(knapsack(values,weights,10,0,0));
 		System.out.println(knapDumb);
-        System.out.println("Catalan");
-        System.out.println(catalan(5));
+        // System.out.println("Catalan");
+        // System.out.println(catalan(5));
+		System.out.println(knapSmart(values,weights,10,0,0));
+		System.out.println(knapSmart);
+		System.out.println(subSeq("ABC", "ACD"));
 	}
-    public static long catalan(int n){
+
+	public static int subSeq(String s1, String s2) {
+		int[][] memo = new int[s1.length() + 1][s2.length() + 1];
+		for (int i = 0; i <= s1.length(); i++) {
+			for (int j = 0; j <= s2.length(); j++) {
+				memo[i][j] = -1;
+			}
+		}
+		return subSeqHelper(s1, s2, memo);
+	}			
+	private static int subSeqHelper(String s1, String s2, int[][] memo) {
+		if (s1.length() == 0 || s2.length() == 0) {
+			return 0;
+		}
+		if (memo[s1.length()][s2.length()] != -1) {
+			return memo[s1.length()][s2.length()];
+		}
+		if (s1.charAt(s1.length() - 1) == s2.charAt(s2.length() - 1)) {
+			memo[s1.length()][s2.length()] = 1 + subSeqHelper(s1.substring(0, s1.length() - 1), s2.substring(0, s2.length() - 1), memo);
+		} else {
+			memo[s1.length()][s2.length()] = Math.max(subSeqHelper(s1.substring(0, s1.length() - 1), s2, memo),subSeqHelper(s1, s2.substring(0, s2.length() - 1), memo));
+		}
+		return memo[s1.length()][s2.length()];
+	}
+	
+				
+	public static long catalan(int n){
         long[] memoCata = new long[n+1];
         return theCatIsOutOfTheBag(n, memoCata);
     }
@@ -67,9 +97,9 @@ public class Dynamo {
 	}
 
 	public static double knapsackSmartH(double[] values, double[] weights, double cap,int i,double max, double[][] memo) {
-		knapDumb++;
+		knapSmart++;
 		if(i==values.length)
-			return max;
+			return max; 
 		if(memo[i][(int)cap]>-.9)
 			return memo[i][(int)cap];
 		double with = 0;
@@ -94,7 +124,7 @@ public class Dynamo {
 	public static double newton(double x, int trials) {
 		if(trials==0)
 			return Double.POSITIVE_INFINITY;
-		if(Math.abs(function(x))<.00001)
+		if(Math.abs(function(x))<.0000001)
 				return x;
 		return newton(x-function(x)/derivative(x),trials-1);
 	}

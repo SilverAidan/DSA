@@ -48,8 +48,7 @@ public class Dynamo {
 			}
 		}
 		return subSeqHelper(s1, s2, memo);
-	}
-
+	}			
 	private static int subSeqHelper(String s1, String s2, int[][] memo) {
 		if (s1.length() == 0 || s2.length() == 0) {
 			return 0;
@@ -141,6 +140,7 @@ public class Dynamo {
 	public static int diceCountM(int dice, int target) {
 		int[][] memo = new int[dice+1][target+1];
 		return diceCountMH(dice,target,memo);
+		
 	}
 
 	public static int diceCountMH(int dice, int target, int[][] memo) {

@@ -1,7 +1,7 @@
 public class Forrest {
     public static void main(String[] args) {
         TNode oak = new TNode(20);
-        int[] arr = {15,17,14,30,21,1};
+        int[] arr = {18,19,12,30,21,1,15,16};
         for(int a : arr){
             oak.addNode(new TNode(a));
         }
@@ -17,5 +17,7 @@ public class Forrest {
         TNode ancestor = new TNode(-999);
         ancestor.right = oak;
         System.out.println(ancestor.getParent(21).value);
+        System.out.println(ancestor.delete(18).value);
+        System.out.println(ancestor.postOrder());
     }
 }

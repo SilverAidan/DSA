@@ -68,7 +68,7 @@ public class TNode {
         return 1 + Math.max(left == null ? -1 : left.getHeight(), right == null ? -1 : right.getHeight());
     }
 
-    public TNode get (Integer i){
+    public TNode get(Integer i){
         if(value == i){
             return this;
         }
@@ -87,9 +87,37 @@ public class TNode {
         if(parent == null){
             return null;
         }
-        if(parent.left == null){
-            parent.value = 
+        TNode disowned = this.get(key);
+        //case1 disowned doesnt have children
+        if(disowned.left == null && disowned.right == null){
+            if(parent.left == disowned){
+                parent.left = null;
+            }else{
+                parent.right = null;
+            }
+            return disowned;
         }
+        //case 2 has one child
+        if(disowned.left==null||disowned.right == null){
+            TNode grandchild = disowned.left == null ? disowned.right : disowned.left;
+            if(parent.left == disowned){
+                parent.left = grandchild;
+            }else{
+                parent.right = grandchild;
+            }
+            return disowned;
+        }
+        //case 3 has two children
+        TNode biggestChild = disowned.left;
+        while(biggestChild.right!=null){
+            biggestChild = biggestChild.right;
+        }
+        disowned.value = biggestChild.value;
+        if(biggestChild == disowned.left)
+            disowned.left = biggestChild;
+        else
+            disowned.left.delete(disowned.value);
+        return new TNode(key);
     }
 
     public TNode getParent(Integer key) {

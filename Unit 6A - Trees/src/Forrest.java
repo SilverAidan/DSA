@@ -19,5 +19,8 @@ public class Forrest {
         System.out.println(ancestor.getParent(21).value);
         System.out.println(ancestor.delete(18).value);
         System.out.println(ancestor.postOrder());
+        TNode.reverse(oak);
+        System.out.println(oak.inOrder());
+        System.out.println(TNode.outerEdges(oak));
     }
 }

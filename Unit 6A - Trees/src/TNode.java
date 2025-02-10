@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class TNode {
     Integer value;
     TNode left, right;
@@ -131,5 +133,40 @@ public class TNode {
             return left ==null?null:left.getParent(key);
         }
         return right == null?null:right.getParent(key);
+    }
+
+    public static void reverse(TNode node){
+        if(node == null){
+            return;
+        }
+        TNode temp = node.left;
+        node.left = node.right;
+        node.right = temp;
+        reverse(node.left);
+        reverse(node.right);
+    }
+
+    public static String outerEdges(TNode root){
+        if (root == null) {
+            return "";
+        }
+        String right = "";
+        String last = "";
+        TNode runner = root;
+        ArrayList<TNode> backwards = new ArrayList<>();
+        while (runner.left != null) {
+            backwards.add(runner.left);
+            runner = runner.left;
+        }
+        runner = root;
+        while (runner.right != null) {
+            right += " " + runner.right.value;
+            runner = runner.right;
+        }
+        for (int i = backwards.size() - 1; i >= 0; i--) {
+            last += backwards.get(i).value + " ";
+        }
+        last += root.value + " " + right;
+        return last.trim();
     }
 }

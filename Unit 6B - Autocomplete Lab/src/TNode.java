@@ -1,23 +1,18 @@
 import java.util.HashMap;
 
 public class TNode {
-    private String value;
-    private boolean isKey;
+    String value;
+    boolean isKey;
     HashMap<String,TNode> children;
-    
-    public TNode(String value, boolean isKey) { 
-        
-    }
-    
-    public String getValue() { 
-        return value;
+
+    public TNode(String value, boolean isKey) {
+        this.value = value;
+        this.isKey = isKey;
     }
 
-    public HashMap<String, TNode> getNext() { 
-        return children;
-    }
-    
-    public boolean isKey() { 
-        return isKey;
+    public TNode(String value, boolean isKey, HashMap<String, TNode> children) {
+        this.value = value;
+        this.isKey = isKey;
+        this.children = children;
     }
 }

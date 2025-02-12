@@ -1,10 +1,12 @@
-import java.util.List;
-
+import java.util.HashMap;
 public class Dictionary {
     private TNode root;
 
-    public Dictionary(){
+    public Dictionary(String[] words){
         root = new TNode("rooter", false);
+        for(String word : words){
+            addKey(word);
+        }
     }
 
     public void addKey(String key) {
@@ -23,7 +25,7 @@ public class Dictionary {
     }
 
     public String toString(){ 
-
+        
     }
 
     public TNode findNode(String key){
@@ -37,8 +39,8 @@ public class Dictionary {
         return runner.isKey ? runner : null;
     }
 
-    public List<String> auto(String prefix) { 
-
+    public HashMap<String, TNode> auto(String word) { 
+        return findNode(word).children;
     }
 
     public boolean isKey(String word) { 

@@ -12,22 +12,51 @@ public class TNode {
         this.right = right;
     }
 
-    public void addNode(TNode tn){
+    public TNode addNode(TNode tn){
         if(tn.value < this.value){
             if(this.left == null){
                 this.left = tn;
             }
             else{
-                this.left.addNode(tn);
+                this.left = this.left.addNode(tn);
             }
         }else if(tn.value > this.value){
             if(this.right == null){
                 this.right = tn;
             }
             else{
-                this.right.addNode(tn);
+                this.right = this.right.addNode(tn);
             }
         }
+        //AVL Balance
+        if(this.getBalance() > 1 && this.left.getBalance() > 0){
+            //left left case
+            System.out.println("left left");
+            return this.rightRotate();
+        }
+        else if(this.getBalance() < -1 && this.right.getBalance() < 0){
+            //right right case
+            System.out.println("right right" + this.value);
+            return this.leftRotate();
+        }
+        System.out.println("standard");
+        return this;
+    }
+    
+    public TNode rightRotate(){
+        TNode newRoot = this.left;
+        TNode newRight = newRoot.right;
+        newRoot.right = this;
+        this.left = newRight;
+        return newRoot;
+    }
+
+    public TNode leftRotate(){
+        TNode newRoot = this.right;
+        TNode newLeft = newRoot.left;
+        newRoot.left = this;
+        this.right = newLeft;
+        return newRoot;
     }
 
     public String inOrder(){
@@ -133,6 +162,12 @@ public class TNode {
             return left ==null?null:left.getParent(key);
         }
         return right == null?null:right.getParent(key);
+    }
+
+    public int getBalance(){
+        int left = this.left == null ? -1 : this.left.getHeight();
+        int right = this.right == null ? -1 : this.right.getHeight();
+        return left - right;
     }
 
     public static void reverse(TNode node){

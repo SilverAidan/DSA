@@ -42,7 +42,8 @@ Invoker
 Io
 Jakiro
 Juggernaut
-Keeper of the Light
+Keeper 
+Light
 Kunkka
 Legion Commander
 Leshrac
@@ -79,7 +80,8 @@ Primal Beast
 Puck
 Pudge
 Pugna
-Queen of Pain
+Queen 
+Pain
 Razor
 Riki
 Rubick

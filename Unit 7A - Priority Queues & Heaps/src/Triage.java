@@ -38,6 +38,6 @@ public class Triage {
 
     public Injury getParent(Injury inj){
         int spot = injuries.indexOf(inj);
-        return spot >-1 ? this.getParent(spot) : null;
+        return this.getParent(spot);
     }
 }

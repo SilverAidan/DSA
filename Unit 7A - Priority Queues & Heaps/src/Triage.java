@@ -31,5 +31,13 @@ public class Triage {
         return spot > -1 ? this.getRight(spot) : null;
     }
 
-    
+    public Injury getParent(int i){
+        int spot = (i-1)/2;
+        return i>0 ? injuries.get(spot) : null;
+    }
+
+    public Injury getParent(Injury inj){
+        int spot = injuries.indexOf(inj);
+        return spot >-1 ? this.getParent(spot) : null;
+    }
 }

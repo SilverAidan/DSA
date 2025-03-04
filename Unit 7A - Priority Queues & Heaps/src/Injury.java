@@ -17,4 +17,9 @@ public class Injury implements Comparable<Injury>{
     public int compareTo(Injury o) {
         return this.priority-o.priority;
     }
+
+    @Override
+    public String toString() {
+        return ailment + " " + priority;
+    }
 }

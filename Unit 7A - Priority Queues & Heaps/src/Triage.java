@@ -1,10 +1,18 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Triage {
     ArrayList<Injury> injuries;
 
     public Triage(ArrayList<Injury> inj){
         injuries = inj;
+    }
+
+    public Triage(Injury[] unPQ){
+        injuries = new ArrayList<Injury>(Arrays.asList(unPQ));
+        for(int i = injuries.size()/2-1; i >-1; i--){
+            downHeap(i);
+        }
     }
 
     public Injury findMin(){
@@ -22,7 +30,7 @@ public class Triage {
     }
 
     public Injury getRight(int i){
-        int spot = i+2;
+        int spot = 2*i+2;
         return spot<injuries.size() ? injuries.get(spot) : null;
     }
 
@@ -61,9 +69,26 @@ public class Triage {
         this.upHeap(injuries.size()-1);
     }
 
-    public Injury treat(){
-        swap(0,injuries.size()-1);
+    public boolean setPriority(int i, int newP) {
+        if (i < 0||i >= injuries.size()||injuries.get(i).priority == newP) 
+            return false;
+        if (newP<injuries.get(i).priority) {
+            injuries.get(i).priority = newP;
+            upHeap(i);
+        } else {
+            injuries.get(i).priority = newP;
+            downHeap(i);
+        }
+        return true;
+    }        
+
+    public Injury treat() {
+        swap(0, injuries.size() - 1);
+        Injury treated = injuries.remove(injuries.size() - 1);
+        downHeap(0);
+        return treated;
     }
+
 
     @Override
     public String toString() {
@@ -93,10 +118,12 @@ public class Triage {
         }
         Injury left = this.getLeft(i);
         Injury right = this.getRight(i);
-        int smaller = left.compareTo(right)<0?2*i+1:2*i+2;
+        int smaller = left.compareTo(right) < 0 ? 2*i+1 : 2*i+2;
         if(injuries.get(i).compareTo(injuries.get(smaller))>0){
-            swap(i, smaller);
-            downHeap(smaller);
+            if (injuries.get(i).compareTo(injuries.get(smaller)) > 0) {
+                swap(i, smaller);
+                downHeap(smaller);
+            }
         }
     }
 }

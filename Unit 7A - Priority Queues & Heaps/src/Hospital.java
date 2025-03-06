@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.PriorityQueue;
 
 public class Hospital {
     public static void main(String[] args) {
@@ -21,5 +23,11 @@ public class Hospital {
                 new Injury("F",8)};
         Triage newOrder = new Triage(unordered);
         System.out.println(newOrder);
+        PriorityQueue<Integer> pq = new PriorityQueue<>();//default min
+        pq.add(5);pq.add(2);pq.add(8);pq.add(2);pq.add(1);
+        System.out.println(pq.poll());//remove
+        System.out.println(pq.peek());//get
+        System.out.println(pq.remove());//remove but could crash
+        PriorityQueue<Integer> pqMax = new PriorityQueue<>(Collections.reverseOrder());//default min
     }
 }

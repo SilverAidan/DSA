@@ -5,13 +5,19 @@ public class CharNode implements Comparable<CharNode>{
 
     @Override
     public int compareTo(CharNode o) {
-        if(this.frequency > o.frequency)
-            return frequency;
-        if(this.frequency < o.frequency)
-            return o.frequency;
-        if(this.frequency == o.frequency)
-            //LETTER STUFF;
-
+        if (this.frequency == o.frequency) {
+            if (this.value == (char) 0 && o.value == (char) 0) {
+                return -1;
+            }
+            if (this.value == (char) 0) {
+                return -1;
+            }
+            if (o.value == (char) 0) {
+                return 1;
+            }
+            return Character.compare(this.value, o.value);
+        }
+        return Integer.compare(this.frequency, o.frequency);
     }
 
     public char getValue() {

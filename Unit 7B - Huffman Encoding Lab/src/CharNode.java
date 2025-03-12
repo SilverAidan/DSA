@@ -2,18 +2,23 @@ public class CharNode implements Comparable<CharNode>{
     private char value;
     private int frequency;
     private CharNode left, right;
+    
+    public CharNode(char value, int frequency) {
+        this.value = value;
+        this.frequency = frequency;
+    }
 
     @Override
     public int compareTo(CharNode o) {
         if (this.frequency == o.frequency) {
             if (this.value == (char) 0 && o.value == (char) 0) {
-                return -1;
+                return 1;
             }
             if (this.value == (char) 0) {
-                return -1;
+                return 1;
             }
             if (o.value == (char) 0) {
-                return 1;
+                return -1;
             }
             return Character.compare(this.value, o.value);
         }
@@ -51,4 +56,11 @@ public class CharNode implements Comparable<CharNode>{
     public void setRight(CharNode right) {
         this.right = right;
     }
+
+    @Override
+    public String toString() {
+        return value + " " + frequency;
+    }
+
+    
 }

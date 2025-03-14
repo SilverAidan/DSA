@@ -37,7 +37,6 @@ public class Huffman {
             newParent.setLeft(left);
             newParent.setRight(right);
             tree.add(newParent);
-            System.out.println("PQ"+tree);
         }
         makeBinaryHashMap();
     }
@@ -74,26 +73,26 @@ public class Huffman {
             output += binary.get(c);
         }
         return output;
-        }
+    }
 
-        public String decode(String output) {
-            String last = "";
-            String building = "";
-            for(char c : output.toCharArray()){
-                building += c;
-                if(binaryReverse.containsKey(building)){
+    public String decode(String output) {
+        String last = "";
+        String building = "";
+        for(char c : output.toCharArray()){
+            building += c;
+            if(binaryReverse.containsKey(building)){
                 last += binaryReverse.get(building);
                 building = "";
             }
-            return last;
         }
+        return last;
+    }
 
-        private static HashMap<String, Character> reverseHash(HashMap<Character,String> bruh){
-            HashMap<String, Character> reversed = new HashMap<>();
-            for (Entry<Character, String> entry : bruh.entrySet()) {
-                reversed.put(entry.getValue(), entry.getKey()); 
-            }
-            return reversed;
+    private static HashMap<String, Character> reverseHash(HashMap<Character,String> bruh){
+        HashMap<String, Character> reversed = new HashMap<>();
+        for (Entry<Character, String> entry : bruh.entrySet()) {
+            reversed.put(entry.getValue(), entry.getKey()); 
         }
+        return reversed;
     }
 }

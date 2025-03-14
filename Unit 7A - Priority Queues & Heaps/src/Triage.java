@@ -8,11 +8,22 @@ public class Triage {
         injuries = inj;
     }
 
-    public Triage(Injury[] unPQ){
+    public Triage(Injury[] unPQ, boolean isMin){
         injuries = new ArrayList<Injury>(Arrays.asList(unPQ));
         for(int i = injuries.size()/2-1; i >-1; i--){
-            downHeap(i);
+            if(isMin){
+                downHeap(i);
+            }
+            else{
+                downHeapMax(i);
+            }
+            
         }
+    }
+    
+    public void heapSort(){
+        ArrayList<Injury> temp = new ArrayList<>();
+        
     }
 
     public Injury findMin(){

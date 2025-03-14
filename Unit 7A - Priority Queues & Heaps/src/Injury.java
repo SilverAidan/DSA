@@ -18,6 +18,15 @@ public class Injury implements Comparable<Injury>{
         return this.priority-o.priority;
     }
 
+
+    public int compareToMax(Injury o){
+        return o.priority-this.priority;
+    }
+
+    public int compareTo(Injury o, boolean isMin){
+        return isMin?compareTo(o):this.compareToMax(o);
+    }
+
     @Override
     public String toString() {
         return ailment + " " + priority;

@@ -27,7 +27,7 @@ public class Hufflepuff {
                         if (decodeFileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
                             String encodedString = Files.readString(decodeFileChooser.getSelectedFile().toPath());
                             String decodedString = brian.decode(encodedString);
-                            System.out.println("Decoded String: \"" + decodedString +"\"");
+                            System.out.println("Decoded String:\n\"" + decodedString +"\"");
                         }
                         break;
                     case 3:

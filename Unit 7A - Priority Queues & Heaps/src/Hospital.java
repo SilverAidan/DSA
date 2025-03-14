@@ -27,7 +27,7 @@ public class Hospital {
         pq.add(5);pq.add(2);pq.add(8);pq.add(2);pq.add(1);
         System.out.println(pq.poll());//remove
         System.out.println(pq.peek());//get
-        System.out.println(pq.remove());//remove but could crash
+        System.oust.println(pq.remove());//remove but could crash
         PriorityQueue<Integer> pqMax = new PriorityQueue<>(Collections.reverseOrder());//default min
     }
 }

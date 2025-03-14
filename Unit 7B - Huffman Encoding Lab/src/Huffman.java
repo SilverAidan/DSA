@@ -9,11 +9,13 @@ public class Huffman {
     private static HashMap<String, Character> binaryReverse;
     private static String input;
 
+    // Constructor to initialize Huffman with input content
     Huffman(String content) {
         input = content;
         hashifyFile(content);
     }
 
+    // Method to create a frequency map from the input content
     private static void hashifyFile(String content) {
         for (char c : content.toCharArray()) {
             if (frq.containsKey(c)) {
@@ -25,6 +27,7 @@ public class Huffman {
         treeifyHashMap();
     }
 
+    // Method to create a priority queue (tree) from the frequency map
     private static void treeifyHashMap() {
         for (Character c : frq.keySet()) {
             tree.add(new CharNode(c, frq.get(c)));
@@ -41,6 +44,7 @@ public class Huffman {
         makeBinaryHashMap();
     }
 
+    // Method to create a binary map from the Huffman tree
     private static void makeBinaryHashMap() {
         CharNode root = tree.peek();
         if (root != null) {
@@ -48,7 +52,8 @@ public class Huffman {
         }
         binaryReverse = reverseHash(binary);
     }
-    
+
+    // Recursive method to build the binary map
     private static void buildBinaryMap(CharNode node, String path) {
         if (node.getLeft() == null && node.getRight() == null) {
             binary.put(node.getValue(), path);
@@ -62,11 +67,13 @@ public class Huffman {
         }
     }
 
+    // Method to return a string representation of the binary map
     @Override
     public String toString() {
         return binary.toString();
     }
 
+    // Method to encode the input content using the binary map
     public String encode() {
         String output = "";
         for(char c : input.toCharArray()){
@@ -75,6 +82,7 @@ public class Huffman {
         return output;
     }
 
+    // Method to decode the encoded string using the reverse binary map
     public String decode(String output) {
         String last = "";
         String building = "";
@@ -88,10 +96,11 @@ public class Huffman {
         return last;
     }
 
+    // Method to reverse the binary map
     private static HashMap<String, Character> reverseHash(HashMap<Character,String> bruh){
         HashMap<String, Character> reversed = new HashMap<>();
         for (Entry<Character, String> entry : bruh.entrySet()) {
-            reversed.put(entry.getValue(), entry.getKey()); 
+            reversed.put(entry.getValue(), entry.getKey());
         }
         return reversed;
     }

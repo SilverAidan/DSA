@@ -44,7 +44,7 @@ public class Huffman {
         makeBinaryHashMap();
     }
 
-    // Method to create a binary map from the Huffman tree
+    // Method to create a nary map from the Huffman tree
     private static void makeBinaryHashMap() {
         CharNode root = tree.peek();
         if (root != null) {

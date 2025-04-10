@@ -10,6 +10,7 @@ public class HashiDriver {
         char[][] puzzle = loadPuzzle();
         Hashi brian = new Hashi(puzzle);
         System.out.println(brian.getConnections());
+        System.out.println(brian.isSolved());
     }
 
     public static char[][] loadPuzzle() throws IOException {

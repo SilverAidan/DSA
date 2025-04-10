@@ -30,7 +30,13 @@ public class Hashi {
     }
 
     private boolean numbersWork() {
-
+        for (Island i : connections.keySet()){
+            if(connections.get(i).size() != i.getValue()){
+                break;
+            }
+            return true;
+        }
+        return false;
     }
 
     private boolean hasMultipleClusters() {

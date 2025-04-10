@@ -10,12 +10,6 @@ public class HashiDriver {
         char[][] puzzle = loadPuzzle();
         Hashi brian = new Hashi(puzzle);
         System.out.println(brian.getConnections());
-        Boolean solved = brian.hasMultipleClusters();
-        if(solved == true){
-            System.out.println("Not solved");
-        }else{
-            System.out.println("Solved!!");
-        }
     }
 
     public static char[][] loadPuzzle() throws IOException {

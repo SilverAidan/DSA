@@ -25,7 +25,15 @@ public class Hashi {
         }
     }
 
-    public boolean hasMultipleClusters() {
+    public boolean isSolved(){
+        return !hasMultipleClusters() && numbersWork();
+    }
+
+    private boolean numbersWork() {
+
+    }
+
+    private boolean hasMultipleClusters() {
         Map<Island, Boolean> visited = new HashMap<>();
         for (Island island : connections.keySet()) {
             visited.put(island, false);
@@ -67,9 +75,11 @@ public class Hashi {
                 int value = Character.getNumericValue(puzzle[i][tempJ + 1]);
                 Island righty = new Island(i, tempJ + 1, value);
                 neighbors.add(righty);  
+                if (puzzle[i][j + 1] == '=') {
+                    neighbors.add(righty);  
+                }
             }
         }
-    
         // Check left direction
         if (j - 1 >= 0 && (puzzle[i][j - 1] == '-' || puzzle[i][j - 1] == '=')) {
             int tempJ = j;
@@ -80,9 +90,11 @@ public class Hashi {
                 int value = Character.getNumericValue(puzzle[i][tempJ - 1]);
                 Island lefty = new Island(i, tempJ - 1, value);
                 neighbors.add(lefty);  
+                if (puzzle[i][j - 1] == '=') {
+                    neighbors.add(lefty);  
+                }
             }
         }
-    
         // Check up direction
         if (i - 1 >= 0 && (puzzle[i - 1][j] == '#' || puzzle[i - 1][j] == '|')) {
             int tempI = i;
@@ -93,9 +105,11 @@ public class Hashi {
                 int value = Character.getNumericValue(puzzle[tempI - 1][j]);
                 Island upy = new Island(tempI - 1, j, value);
                 neighbors.add(upy);
+                if (puzzle[i - 1][j] == '#') {
+                    neighbors.add(upy);  
+                }
             }
         }
-    
         // Check down direction
         if (i + 1 < puzzle.length && (puzzle[i + 1][j] == '#' || puzzle[i + 1][j] == '|')) {
             int tempI = i;
@@ -106,11 +120,14 @@ public class Hashi {
                 int value = Character.getNumericValue(puzzle[tempI + 1][j]);
                 Island downy = new Island(tempI + 1, j, value);
                 neighbors.add(downy);
+                if (puzzle[i + 1][j] == '#') {
+                    neighbors.add(downy);  
+                }
             }
         }
         return neighbors;
-    }  
-       
+    }
+    
     public HashMap<Island, ArrayList<Island>> getConnections() {
         return connections;
     }

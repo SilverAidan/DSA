@@ -8,7 +8,7 @@ public class GnomeDrama {
 		GNode Grumpy = new GNode("Grumpy",1);
 		GNode Sleepy = new GNode("Sleepy",2);
 		GNode Sneezy = new GNode("Sneezy",3);
-		HashSet<GNode> docBuddies = new HashSet<GNode>(Set.of(Grumpy,Sleepy));
+		//HashSet<GNode> docBuddies = new HashSet<GNode>(Set.of(Grumpy,Sleepy));
 		cottage.addGNode(Doc, null, false);
 		cottage.addGNode(Grumpy, new HashSet<GNode>(Set.of(Doc)),false);
 		System.out.println(cottage);

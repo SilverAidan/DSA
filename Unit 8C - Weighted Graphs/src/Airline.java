@@ -1,5 +1,3 @@
-package src;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.PriorityQueue;
@@ -51,22 +49,6 @@ public class Airline {
             if (visited.size() == cities.size()) return mst;
         }
         return null;
-        
-        // toVisit.add(hub);
-        
-        // while (!toVisit.isEmpty()) {
-        //     City exploring = toVisit.poll();
-        //     if (visited.contains(exploring))
-        //         continue;
-        //     for (City c : exploring.connections.keySet()) {
-        //         if (!visited.contains(c)) {
-        //             if (c.price > exploring.connections.get(c))
-        //                 c.price = exploring.connections.get(c);
-        //             toVisit.add(c);
-        //         }
-        //     }
-        // }
-
     }
 
     public void dijkstra() {

@@ -52,6 +52,7 @@ public class Travel {
         // DSAir.cities.add(new City("Moscow"));
         System.out.println(DSAir.prim());
         // System.out.println(cities[4].getRoute());
+        System.out.println(DSAir.getEdges());
 
     }
 }

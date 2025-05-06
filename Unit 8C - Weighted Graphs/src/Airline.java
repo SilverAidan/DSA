@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.PriorityQueue;
 
@@ -49,6 +51,38 @@ public class Airline {
             if (visited.size() == cities.size()) return mst;
         }
         return null;
+    }
+
+    public ArrayList<Edge> kruskal(){
+        ArrayList<Edge> edges = this.getEdges();
+        HashMap<City,HashSet<City>> islands = new HashMap<>();
+        for(City c : cities){
+            islands.put(c, new HashSet<>(Set.of(c)));
+        }
+        for(Edge edge : edges){
+            City A = edge.A;
+            City B = edge.B;
+            HashSet<City> set1 = islands.get(A);
+            HashSet<City> set2 = islands.get(B);
+            if(set1 != set2){
+                if(set1.size()>set2.size()){
+                    set1.addAll(set2);
+                }
+            }
+        }
+    }
+
+    public ArrayList<Edge> getEdges(){
+        HashSet<Edge> edges = new HashSet<>();
+        for(City c : cities){
+            for(City n : c.connections.keySet()){
+                Edge edge = new Edge(c, n, c.connections.get(n));
+                edges.add(edge);
+            }
+        }
+        ArrayList<Edge> output = new ArrayList<>(edges);
+        Collections.sort(output);
+        return output;
     }
 
     public void dijkstra() {

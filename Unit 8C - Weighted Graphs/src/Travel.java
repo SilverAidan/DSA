@@ -50,9 +50,14 @@ public class Travel {
         }
         System.out.println(sum);
         // DSAir.cities.add(new City("Moscow"));
-        System.out.println(DSAir.prim());
-        // System.out.println(cities[4].getRoute());
         System.out.println(DSAir.getEdges());
-
+        // System.out.println(cities[4].getRoute());
+        System.out.println(DSAir.kruskal());
+        ArrayList<Edge> krus = DSAir.kruskal();
+        double sum1 = 0;
+        for (Edge e : krus) {
+            sum1 += e.cost;
+        }
+        System.out.println(sum1);
     }
 }

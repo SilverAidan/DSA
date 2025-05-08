@@ -7,6 +7,7 @@ import java.util.PriorityQueue;
 public class Airline {
     HashSet<City> cities;
     City hub;
+    HashMap<City,City> rep = new HashMap<>();
 
     public Airline(HashSet<City> cities, City hub) {
         this.cities = cities;
@@ -53,29 +54,44 @@ public class Airline {
         return null;
     }
 
-    public ArrayList<Edge> kruskal(){
+    public ArrayList<Edge> kruskal() {
+       
         ArrayList<Edge> edges = this.getEdges();
-        HashMap<City,HashSet<City>> islands = new HashMap<>();
-        for(City c : cities){
-            islands.put(c, new HashSet<>(Set.of(c)));
+        for(City city:cities) {
+            rep.put(city, city);
         }
-        for(Edge edge : edges){
-            City A = edge.A;
-            City B = edge.B;
-            HashSet<City> set1 = islands.get(A);
-            HashSet<City> set2 = islands.get(B);
-            if(set1 != set2){
-                if(set1.size()>set2.size()){
-                    set1.addAll(set2);
-                }
-            }
+        
+        ArrayList<Edge> mst = new ArrayList<>();
+        for(Edge edge:edges) {
+            if(union(edge.A, edge.B))
+                mst.add(edge);
+            if(mst.size()==cities.size()-1)
+                return mst;
         }
+        return mst;
     }
 
-    public ArrayList<Edge> getEdges(){
+    private boolean union(City cityA, City cityB) {
+        City repA = getRep(cityA);
+        City repB = getRep(cityB);
+        if (repA.equals(repB)) {
+        return false;
+        }
+        rep.put(repA, repB);
+        return true;
+    }
+    
+    private City getRep(City city) {
+        if (rep.get(city) != city) {
+            return getRep(rep.get(city));
+        }
+        return rep.get(city);
+    }
+ 
+    public ArrayList<Edge> getEdges() {
         HashSet<Edge> edges = new HashSet<>();
-        for(City c : cities){
-            for(City n : c.connections.keySet()){
+        for (City c : cities) {
+            for (City n : c.connections.keySet()) {
                 Edge edge = new Edge(c, n, c.connections.get(n));
                 edges.add(edge);
             }

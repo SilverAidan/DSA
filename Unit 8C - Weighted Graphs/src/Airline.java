@@ -55,12 +55,10 @@ public class Airline {
     }
 
     public ArrayList<Edge> kruskal() {
-       
         ArrayList<Edge> edges = this.getEdges();
         for(City city:cities) {
             rep.put(city, city);
         }
-        
         ArrayList<Edge> mst = new ArrayList<>();
         for(Edge edge:edges) {
             if(union(edge.A, edge.B))
